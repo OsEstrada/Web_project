@@ -1,0 +1,53 @@
+.body {
+    background-color:white;
+    height: 100vh;
+  }
+
+.root {
+    height: 100vh;
+  }
+
+.paper_signin {
+  margin: 30% 3% ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.paper_signup {
+  margin: 30% 0% ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar>:last-child{
+  color:white;
+}
+
+.typography{
+  margin-bottom: 40%;
+}
+
+.form {
+  width: 100%;
+}
+
+.form>div div{
+  margin: 1px 0 1px 0;
+}
+
+.links{
+  text-decoration: none;
+}
+
+.submit {
+  margin: 4% 0 4% 0;
+} 
+
+.image{
+  background-image: url(https://source.unsplash.com/random);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 'center';
+}
