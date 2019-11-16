@@ -1,6 +1,7 @@
 import React from "react";
 import Signin from "./login/signin";
 import Signup from "./login/signup";
+import Main from "./Client_app/index";
 import {BrowserRouter, Route, Switch} from "react-router-dom"
  
 
@@ -19,7 +20,7 @@ class login extends React.Component{
     return(
       <BrowserRouter>
       <Switch>
-          <Route path="/" exact component={Signin}/>
+          <Route path="/" exact component={Main}/>
           <Route path="/Sign-In" exact component={Signin}/> 
           <Route path="/Sign-Up" exact component ={Signup}/>
       </Switch>
