@@ -5,7 +5,9 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
     tab_list: {
         marginTop:'30%',
-        marginBottom:'30%'
+        marginBottom:'30%',
+        alignSelf:'center',
+        width:'100%'
     },
     logo:{
         marginBottom:'10%'

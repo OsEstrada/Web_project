@@ -1,7 +1,7 @@
 import React from "react";
 import Signin from "./login/signin";
 import Signup from "./login/signup";
-import Main from "./Client_app/index";
+import Main from "./Layouts/index";
 import {BrowserRouter, Route, Switch} from "react-router-dom"
  
 
