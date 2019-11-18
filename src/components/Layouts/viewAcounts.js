@@ -90,10 +90,10 @@ export default class Views extends React.Component {
     .then(res =>{return res.json()})
     .then(data=>{
         console.log(data);
-        let butter_list = this.state.account_list.slice();
+        let list = this.state.account_list.slice();
       
         this.setState({
-            student_list :butter_list.concat([data.account]),
+            account_list: list.concat([data.account]),
         });
     })
     .catch(err => console.log("Ocurrio un error en la conexion")) 
@@ -106,7 +106,7 @@ export default class Views extends React.Component {
           <AddAccount onSubmit = {(account)=>{this.handleSubmit(account);}}/>
         ) : (
           this.state.account_list.map((w, i) => {
-              return <MediaCard nameAccount={this.state.account_list[i]} />
+              {/* return <MediaCard nameAccount={this.state.account_list[i]} /> */}
             })
           )}
       </div>

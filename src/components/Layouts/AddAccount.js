@@ -9,10 +9,12 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import NumberFormat from 'react-number-format';
 import Box from '@material-ui/core/Box';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+
 
 class AddAccount extends React.Component {
 	constructor(props) {
@@ -21,10 +23,9 @@ class AddAccount extends React.Component {
 		this.options = [ 'Efectivo', 'Débito', 'Ahorro', 'Crédito', 'Corriente', 'De valor' ];
 
 		this.state = {
-			nameAccount: "",
-			typeAccount: this.options[0],
-			money: true,
-			dueDate: '',
+			name: '',
+			type: this.options[0],
+			amount: '',
 			open: false
 		};
 	}
@@ -68,20 +69,15 @@ class AddAccount extends React.Component {
 						<TextField
 							autoFocus
 							margin="dense"
-							name="nameAccount"
+							name="name"
 							label="Nombre cuenta"
 							type="text"
 							onChange={this.handleChange}
 							fullWidth
 						/>
-						<FormControl style={{ marginTop: '5%' }}>
+						<FormControl style={{ marginTop: '5%' }} fullWidth>
 							<InputLabel>typeAccount</InputLabel>
-							<Select
-								value={this.state.typeAccount}
-								onChange={this.handleChange}
-								name="typeAccount"
-								fullWidth
-							>
+							<Select value={this.state.type} onChange={this.handleChange} name="type">
 								{this.options.map((a) => (
 									<MenuItem key={a} value={a}>
 										{a}
@@ -89,27 +85,16 @@ class AddAccount extends React.Component {
 								))}
 							</Select>
 						</FormControl>
-						<TextField
-							id="date"
-							label="Fecha de caducidad"
-							type="date"
-							name="dueDate"
-							InputLabelProps={{
-								shrink: true
-							}}
-							style={{ marginTop: '5%' }}
-							fullWidth
-						/>
 
-						<InputLabel>
-							Monto:
-							<NumberFormat
-								style={{ marginTop: '5%', marginLeft: '5%' }}
-								thousandSeparator={true}
-								prefix={'$'}
-								onChange={this.handleChange}
-							/>
-						</InputLabel>
+						<FormControl style={{ marginTop: '5%' }} fullWidth>
+						<InputLabel> Amount</InputLabel>
+						<OutlinedInput
+							name="amount"
+							value={this.state.amount}
+							onChange={this.handleChange}
+							startAdornment={<InputAdornment position="start">$</InputAdornment>}
+						/>
+						</FormControl>
 					</DialogContent>
 					<DialogActions>
 						<Button onClick={this.handleClose} color="primary">
@@ -118,11 +103,11 @@ class AddAccount extends React.Component {
 						<Button
 							onClick={() => {
 								this.props.onSubmit({
-									nameAccount: this.state.nameAccount,
-									typeAccount: this.state.typeAccount,
-									dueDate: this.state.dueDate,
-									money: this.state.money
+									name: this.state.name,
+									type: this.state.type,
+									amount: this.state.amount
 								});
+								this.handleClose();
 							}}
 							color="primary"
 						>
@@ -132,7 +117,7 @@ class AddAccount extends React.Component {
 				</Dialog>
 			</div>
 		);
-	};
+	}
 }
 
 export default AddAccount;
