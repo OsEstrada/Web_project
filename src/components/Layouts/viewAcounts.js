@@ -1,84 +1,77 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import MuiExpansionPanel from "@material-ui/core/ExpansionPanel";
-import MuiExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import MuiExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import { Typography } from "@material-ui/core";
+import React from 'react';
 import API from '../../utils/apiUrlBase';
+import { makeStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import { flexbox } from '@material-ui/system';
 
-
-const ExpansionPanel = withStyles({
-  root: {
-    border: "1px solid rgba(0, 0, 0, .125)",
-    boxShadow: "none",
-    "&:not(:last-child)": {
-      borderBottom: 0
-    },
-    "&:before": {
-      display: "none"
-    },
-    "&$expanded": {
-      margin: "auto"
-    }
+const useStyles = makeStyles(theme => ({
+  card: {
+    maxWidth: 345
   },
-  expanded: {}
-})(MuiExpansionPanel);
-
-const ExpansionPanelSummary = withStyles({
-  root: {
-    backgroundColor: "rgba(0, 0, 0, .03)",
-    borderBottom: "1px solid rgba(0, 0, 0, .125)",
-    marginBottom: -1,
-    minHeight: 56,
-    "&$expanded": {
-      minHeight: 56
-    }
+  media: {
+    height: 140
   },
-  content: {
-    "&$expanded": {
-      margin: "12px 0"
-    }
+  fab: {
+    height:80,
+    width: 80,
   },
-  expanded: {}
-})(MuiExpansionPanelSummary);
-
-const ExpansionPanelDetails = withStyles(theme => ({
-  root: {
-    padding: theme.spacing(2)
+  icon: {
+    width:30,
+    height:30
+  },
+  hidden:{
+    display: "none"
   }
-}))(MuiExpansionPanelDetails);
+}));
 
-function CustomizedExpansionPanels({accounts}) {
-  const [expanded, setExpanded] = React.useState("panel1");
-
-  const handleChange = panel => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-  };
-
-  let counter = 0;
-
+function Add() {
+  const classes = useStyles();
   return (
-    <div>
-      {accounts.map((account)=>
-         <ExpansionPanel square expanded ={expanded ===`panel ${counter}`} onChange={handleChange(`panel${counter}`)} >
-          <ExpansionPanelSummary aria-controls={`panel${counter}d-content`}  id={`panel${counter}d-header`}>
-            <Typography>{account.name}</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+    <Fab color="primary" aria-label="add" className={classes.fab}>
+      <AddIcon className={classes.icon}/>
+    </Fab>
+  );
+}
+
+function MediaCard(props) {
+  const classes = useStyles();
+  return (
+    <Card className={classes.card}>
+      <CardActionArea>
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="h2">
+            {props.accounts.name}
           </Typography>
-        </ExpansionPanelDetails>
-        </ExpansionPanel>
-      )}
-    </div>
-  )
+          <Typography variant="body2" color="textSecondary" component="p">
+            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across
+            all continents except Antarctica
+						</Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Button size="small" color="primary">
+          Share
+					</Button>
+        <Button size="small" color="primary">
+          Learn More
+					</Button>
+      </CardActions>
+    </Card>
+  );
 }
 
 export default class Views extends React.Component {
-
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       account_list: []
     };
@@ -87,24 +80,35 @@ export default class Views extends React.Component {
   componentDidMount() {
     let options = {
       headers: {
-        Accept: "application/json"
+        Accept: 'application/json'
       }
     };
     fetch(`${API.baseURL}/accounts`, options)
-      .then(res => {
+      .then((res) => {
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         console.log(data);
-        data.map((element)=>
-          this.state.account_list.push(element)
-        )
+        data.map((element) => this.state.account_list.push(element));
       })
       .then(console.log(this.state.account_list))
-      .catch(err => console.log("Ocurrio un error en la conexion"));
-      
+      .catch((err) => console.log('Ocurrio un error en la conexion'));
   }
+
   render() {
-    return <CustomizedExpansionPanels accounts ={this.state.account_list}/>;
+    return (
+      <div style={{ width: '100%'}}>
+        {this.state.account_list.length === 0 ? (
+          <Box display="flex" padding="3%" justifyContent="flex-end">
+            <Add position= "absolute" alignSelf="flex-end"/>
+          </Box>
+        ) : (
+          this.state.account_list.map((w, i) => {
+              return <MediaCard nameAccount={this.state.account_list[i]} />
+            })
+          )}
+      </div>
+
+    );
   }
 }
