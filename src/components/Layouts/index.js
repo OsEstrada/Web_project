@@ -5,7 +5,7 @@ import Footer from '../Layouts/footer';
 import NavBar from '../Layouts/navbar';
 import ViewAcounts from '../Layouts/viewAcounts'
 
-const drawerWidth = 210;
+const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
     container: {

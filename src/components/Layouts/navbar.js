@@ -39,9 +39,9 @@ function a11yProps(index) {
           onChange={handleChange}
           aria-label="Vertical tabs example"
         >
-          <Tab label="Cuentas" {...a11yProps(0)}  style={{fontSize:'0.6em'}} />
-          <Tab label="Transacciones" {...a11yProps(1)} style={{fontSize:'0.6em'}} />
-          <Tab label="Categorias" {...a11yProps(2)} style={{fontSize:'0.6em'}} />
+          <Tab label="Cuentas" {...a11yProps(0)}  style={{fontSize:'1em'}} />
+          <Tab label="Transacciones" {...a11yProps(1)} style={{fontSize:'1em'}} />
+          <Tab label="Categorias" {...a11yProps(2)} style={{fontSize:'1em'}} />
      
         </Tabs>
       </div>
