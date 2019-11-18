@@ -1,17 +1,14 @@
 import React from 'react';
 import API from '../../utils/apiUrlBase';
 import { makeStyles } from '@material-ui/core/styles';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import { flexbox } from '@material-ui/system';
+import AddAccount from "./AddAccount";
+
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -19,28 +16,9 @@ const useStyles = makeStyles(theme => ({
   },
   media: {
     height: 140
-  },
-  fab: {
-    height:80,
-    width: 80,
-  },
-  icon: {
-    width:30,
-    height:30
-  },
-  hidden:{
-    display: "none"
   }
 }));
 
-function Add() {
-  const classes = useStyles();
-  return (
-    <Fab color="primary" aria-label="add" className={classes.fab}>
-      <AddIcon className={classes.icon}/>
-    </Fab>
-  );
-}
 
 function MediaCard(props) {
   const classes = useStyles();
@@ -70,6 +48,7 @@ function MediaCard(props) {
 }
 
 export default class Views extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -95,20 +74,42 @@ export default class Views extends React.Component {
       .catch((err) => console.log('Ocurrio un error en la conexion'));
   }
 
+  handleSubmit(account){
+
+    let options ={
+        method : "POST",
+        headers : {
+            "Content-type" : "application/json",
+            Accept: "application/json"
+        },
+
+        body :  JSON.stringify(account)
+    }
+
+    fetch(`${API.baseURL}/accounts/create`,options)
+    .then(res =>{return res.json()})
+    .then(data=>{
+        console.log(data);
+        let butter_list = this.state.account_list.slice();
+      
+        this.setState({
+            student_list :butter_list.concat([data.account]),
+        });
+    })
+    .catch(err => console.log("Ocurrio un error en la conexion")) 
+  }
+
   render() {
     return (
       <div style={{ width: '100%'}}>
         {this.state.account_list.length === 0 ? (
-          <Box display="flex" padding="3%" justifyContent="flex-end">
-            <Add position= "absolute" alignSelf="flex-end"/>
-          </Box>
+          <AddAccount onSubmit = {(account)=>{this.handleSubmit(account);}}/>
         ) : (
           this.state.account_list.map((w, i) => {
               return <MediaCard nameAccount={this.state.account_list[i]} />
             })
           )}
       </div>
-
     );
   }
 }
