@@ -6,12 +6,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-class RegisterCard extends React.Component {
+class CardAccount extends React.Component {
 	render() {
 		let account = this.props.account;
 		return (
-			<Card style={{ minWidth: '400px', backgroundColor: '#7cffcb', 
-                margin: '2%', backgroundImage:'linear-gradient(315deg, #7cffcb 0%, #74f2ce 74%)'}}>
+			<Card style={{ minWidth: '400px', backgroundColor: '#7cffcb', margin: '1%', backgroundImage:'linear-gradient(315deg, #7cffcb 0%, #74f2ce 74%)'}}>
 				<CardActionArea>
 					<CardContent>
 						<Typography gutterBottom variant="h5" component="h2">
@@ -40,4 +39,4 @@ class RegisterCard extends React.Component {
 	}
 }
 
-export default RegisterCard;
+export default CardAccount;

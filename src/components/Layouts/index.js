@@ -49,15 +49,15 @@ const useStyles = makeStyles((theme) => ({
 		overflowY: 'auto'
     },
     logocontainer: {
-        backgroundColor: '#2a2a72',
-        backgroundImage: 'linear-gradient(315deg, #2a2a72 0%, #009ffd 74%)',
-        position: 'relative',
-        width: drawerWidth
+		backgroundColor: '#2a2a72',
+        backgroundImage: 'linear-gradient(315deg, #2a2a72 0%, #009ffd 0%)',
+        position: 'fixed',
+		width: drawerWidth,
+		minHeight: '10vh'
     },
     logo: {
-        Top: '0',
+		Top: '0',
         marginLeft: '80px',
-        position: 'absolute',
         width: '80px',
     }
 }));

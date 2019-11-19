@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../../utils/apiUrlBase';
 import AddAccount from './AddAccount';
-import RegisterCard from './RegisterCard';
+import CardAccount from './CardAccount';
 
 export default class Views extends React.Component {
 	constructor(props) {
@@ -10,24 +10,6 @@ export default class Views extends React.Component {
 			account_list: []
 		};
 	}
-
-	// componentDidMount() {
-	//   let options = {
-	//     headers: {
-	//       Accept: 'application/json'
-	//     }
-	//   };
-	//   fetch(`${API.baseURL}/accounts`, options)
-	//     .then((res) => {
-	//       return res.json();
-	//     })
-	//     .then((data) => {
-	//       console.log(data);
-	//       data.map((element) => this.state.account_list.push(element));
-	//     })
-	//     .then(console.log(this.state.account_list))
-	//     .catch((err) => console.log('Ocurrio un error en la conexion'));
-	// }
 
 	componentDidMount() {
 		let options = {
@@ -105,7 +87,7 @@ export default class Views extends React.Component {
 
 	render() {
 		return (
-			<div style={{ width: '100%' }}>
+			<div>
 				<AddAccount
 					onSubmit={(account) => {
 						this.handleSubmit(account);
@@ -114,7 +96,7 @@ export default class Views extends React.Component {
 
         <div style={{display:'flex', flexFlow: 'row wrap', justifyContent: 'center'}}>
           {this.state.account_list.map((element) => {
-            return <RegisterCard key={element._id} account={element} onDelete= {()=>{
+            return <CardAccount key={element._id} account={element} onDelete= {()=>{
                     this.handleDelete(element);
                 }} />;
           })}
