@@ -23,7 +23,7 @@ export default class Views extends React.Component {
 			})
 			.then((data) => {
 				console.log(data);
-				data.map((element) => this.state.account_list.push(element));
+				this.setState({account_list: this.state.account_list.concat(data)});
 			})
 			.catch((err) => console.log('Ocurrio un error en la conexion'));
 	}

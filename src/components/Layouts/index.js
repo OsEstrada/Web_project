@@ -6,6 +6,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Footer from '../Layouts/footer';
 import NavBar from '../Layouts/navbar';
 import ViewAcounts from '../Layouts/viewAcounts';
+import Avatar from '@material-ui/core/Avatar';
+import Grid from '@material-ui/core/Grid';
 
 const drawerWidth = 240;
 
@@ -14,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex'
 	},
 	appBar: {
-        backgroundColor: '#2a2a72',
-        backgroundImage: 'linear-gradient(315deg, #2a2a72 0%, #009ffd 74%)',
+		backgroundColor: '#2a2a72',
+		backgroundImage: 'linear-gradient(315deg, #2a2a72 0%, #009ffd 74%)',
 		width: `calc(100% - ${drawerWidth}px)`,
 		marginLeft: drawerWidth,
 		height: '10vh'
@@ -29,9 +31,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	toolbar: theme.mixins.toolbar,
 	nav_item: {
-        backgroundColor: '#2a2a72',
-        backgroundImage: 'linear-gradient(315deg, #2a2a72 0%, #009ffd 74%)',
-        marginTop: '10vh',
+		backgroundColor: '#2a2a72',
+		backgroundImage: 'linear-gradient(315deg, #2a2a72 0%, #009ffd 74%)',
+		marginTop: '10vh',
 		color: 'white',
 		height: '90vh',
 		width: drawerWidth,
@@ -47,19 +49,25 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: '10vh',
 		minHeight: '80vh',
 		overflowY: 'auto'
-    },
-    logocontainer: {
+	},
+	logocontainer: {
 		backgroundColor: '#2a2a72',
-        backgroundImage: 'linear-gradient(315deg, #2a2a72 0%, #009ffd 0%)',
-        position: 'fixed',
+		backgroundImage: 'linear-gradient(315deg, #2a2a72 0%, #009ffd 0%)',
+		position: 'fixed',
 		width: drawerWidth,
 		minHeight: '10vh'
-    },
-    logo: {
+	},
+	logo: {
 		Top: '0',
-        marginLeft: '80px',
-        width: '80px',
-    }
+		marginLeft: '80px',
+		width: '80px'
+	},
+	avatar: {
+		marginTop: '15px',
+		marginRight: '10px',
+		width: 60,
+		height: 60,
+	}
 }));
 
 export default (props) => {
@@ -68,10 +76,14 @@ export default (props) => {
 	return (
 		<div className={classes.root}>
 			<CssBaseline />
-			<AppBar position="fixed" className={classes.appBar} />
-            <div className={classes.logocontainer}>
-            <img src="logoA.png" alt="logo" className={classes.logo} />
-            </div>
+			<AppBar position="fixed" className={classes.appBar}>
+				<Grid container justify="flex-end" alignItems="center">
+					<Avatar alt="user" src="user-512.jpg" className={classes.avatar} />
+				</Grid>
+			</AppBar>
+			<div className={classes.logocontainer}>
+				<img src="logoA.png" alt="logo" className={classes.logo} />
+			</div>
 
 			<Drawer
 				className={classes.drawer}
@@ -80,7 +92,7 @@ export default (props) => {
 					paper: classes.nav_item
 				}}
 				anchor="left"
-			>	
+			>
 				<NavBar />
 			</Drawer>
 			<main className={classes.content}>
