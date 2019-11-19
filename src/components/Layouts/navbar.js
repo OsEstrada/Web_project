@@ -1,5 +1,5 @@
 import React from 'react';
-import {Typography,Tabs, Tab} from '@material-ui/core';
+import {Tabs, Tab} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -8,9 +8,6 @@ const useStyles = makeStyles(theme => ({
         marginBottom:'30%',
         alignSelf:'center',
         width:'100%'
-    },
-    logo:{
-        marginBottom:'10%'
     }
   }));
 
@@ -31,7 +28,6 @@ function a11yProps(index) {
   
     return (
       <div className={styles.tab_list}>
-        <Typography variant="body1" align="center" className={styles.logo}> Inserte logo</Typography>
         <Tabs
           orientation="vertical"
           variant="fullWidth"
