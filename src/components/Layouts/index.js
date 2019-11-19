@@ -5,9 +5,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Footer from '../Layouts/footer';
 import NavBar from '../Layouts/navbar';
-import ViewAcounts from '../Layouts/viewAcounts';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
+import Menu from '../Layouts/Menu';
+import ViewAcounts from '../Layouts/viewAcounts';
+import Transaction from '../Layouts/Transaction';
 
 const drawerWidth = 240;
 
@@ -64,9 +66,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 	avatar: {
 		marginTop: '15px',
-		marginRight: '10px',
 		width: 60,
 		height: 60,
+	},
+	barcontainer: {
+		paddingRight: theme.spacing(6),
 	}
 }));
 
@@ -77,8 +81,9 @@ export default (props) => {
 		<div className={classes.root}>
 			<CssBaseline />
 			<AppBar position="fixed" className={classes.appBar}>
-				<Grid container justify="flex-end" alignItems="center">
+				<Grid container justify="flex-end" alignItems="center" className={classes.barcontainer}>
 					<Avatar alt="user" src="user-512.jpg" className={classes.avatar} />
+					<Menu/>
 				</Grid>
 			</AppBar>
 			<div className={classes.logocontainer}>
@@ -97,7 +102,7 @@ export default (props) => {
 			</Drawer>
 			<main className={classes.content}>
 				<div className={classes.bodycontainer}>
-					<ViewAcounts />
+					<Transaction />
 				</div>
 				<Footer />
 			</main>
