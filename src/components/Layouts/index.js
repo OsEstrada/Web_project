@@ -102,7 +102,7 @@ export default (props) => {
 			</Drawer>
 			<main className={classes.content}>
 				<div className={classes.bodycontainer}>
-					<ViewAcounts/>
+					<Transaction/>
 				</div>
 				<Footer />
 			</main>

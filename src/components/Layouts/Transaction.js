@@ -23,12 +23,12 @@ export default class Views extends React.Component {
 			})
 			.then((data) => {
 				console.log(data);
-				this.setState({transaction_list: this.state.account_list.concat(data)});
+				this.setState({transaction_list: this.state.transaction_list.concat(data)});
 			})
 			.catch((err) => console.log('Ocurrio un error en la conexion'));
 	}
 
-	handleSubmit(account) {
+	handleSubmit(transaction) {
 		let options = {
 			method: 'POST',
 			headers: {
@@ -36,25 +36,25 @@ export default class Views extends React.Component {
 				Accept: 'application/json'
 			},
 
-			body: JSON.stringify(account)
+			body: JSON.stringify(transaction)
 		};
 
-		fetch(`${API.baseURL}/accounts/create`, options)
+		fetch(`${API.baseURL}/transactions/create`, options)
 			.then((res) => {
 				return res.json();
 			})
 			.then((data) => {
 				console.log(data);
-				let list = this.state.account_list.slice();
+				let list = this.state.transaction_list.slice();
 
 				this.setState({
-					account_list: list.concat([ data.account ])
+					transaction_list: list.concat([ data.account ])
 				});
 			})
 			.catch((err) => console.log('Ocurrio un error en la conexion'));
   }
   
-  handleDelete(account){
+  handleDelete(transaction){
 
     let options ={
         method : "DELETE",
@@ -63,23 +63,23 @@ export default class Views extends React.Component {
             Accept: "application/json"
         },
 
-        body :  JSON.stringify({id:account._id})
+        body :  JSON.stringify({id:transaction._id})
     }
 
-    fetch(`${API.baseURL}/accounts/delete`,options)
+    fetch(`${API.baseURL}/transactions/delete`,options)
     .then(res =>{return res.json()})
     .then(data=>{
         console.log(data);
 
-        let index = this.state.account_list.find(value=>{
-            return value._id === account._id;
+        let index = this.state.transaction_list.find(value=>{
+            return value._id === transaction._id;
         })
 
-        let buffer_list = this.state.account_list.slice();
+        let buffer_list = this.state.transaction_list.slice();
         buffer_list.splice(index, 1);
 
         this.setState({
-            account_list: buffer_list
+            transaction_list: buffer_list
         });
     })
     .catch(err => console.log("Ocurrio un error en la conexion"))
@@ -88,15 +88,15 @@ export default class Views extends React.Component {
 	render() {
 		return (
 			<div>
-				<AddAccount
-					onSubmit={(account) => {
-						this.handleSubmit(account);
+				<AddTransaction
+					onSubmit={(transaction) => {
+						this.handleSubmit(transaction);
 					}}
 				/>
 
         <div style={{display:'flex', flexFlow: 'row wrap', justifyContent: 'center'}}>
-          {this.state.account_list.map((element) => {
-            return <CardAccount key={element._id} account={element} onDelete= {()=>{
+          {this.state.transaction_list.map((element) => {
+            return <TransactionTable key={element._id} transaction={element} onDelete= {()=>{
                     this.handleDelete(element);
                 }} />;
           })}

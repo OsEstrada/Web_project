@@ -76,7 +76,7 @@ class AddAccount extends React.Component {
 							fullWidth
 						/>
 						<FormControl style={{ marginTop: '5%' }} fullWidth>
-							<InputLabel>typeAccount</InputLabel>
+							<InputLabel>Tipo de Cuenta</InputLabel>
 							<Select value={this.state.type} onChange={this.handleChange} name="type">
 								{this.options.map((a) => (
 									<MenuItem key={a} value={a}>
