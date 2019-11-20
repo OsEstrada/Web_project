@@ -1,10 +1,10 @@
 import React from "react";
-import classes from  "./styles.module.css";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import { makeStyles } from '@material-ui/core/styles';
 import {Link} from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,21 +29,22 @@ export default class signin extends React.Component{
 			headers: {
 				'Content-type': 'application/json',
 				Accept: 'application/json'
-			},
-
-			body: JSON.stringify(this.state)
+      },
 		};
 
-		fetch(`${API.baseURL}/users/:user`, options)
+		fetch(`${API.baseURL}/users/${this.state}`, options)
 			.then((res) => {
 				return res.json();
 			})
 			.then((data) => {
 				console.log(data);
-
+        this.setState({
+					email: this.state.email.concat(data.email),
+					password: this.state.password.concat(data.password)
+        })
 				
 			})
-			.catch((err) => console.log('Ocurrio un error en la conexion'));
+			.catch((err) => console.log(err));
 	};
   
   handleChange = (e) => {
@@ -54,7 +55,6 @@ export default class signin extends React.Component{
   };
   
     render(){
-       
         return(
           <Grid container component="main" className={classes.body}>
           <CssBaseline />

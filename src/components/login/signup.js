@@ -50,13 +50,14 @@ export default class signup extends React.Component {
 				console.log(data);
 
 				this.setState({
-					firstName: this.state.concat(data.firstName),
-					lastName: this.state.concat(data.lastName),
-					email: this.state.concat(data.email),
-					password: this.state.concat(data.password)
-				});
-			})
-			.catch((err) => console.log('Ocurrio un error en la conexion'));
+					firstName: this.state.firstName.concat(data.firstName),
+					lastName: this.state.lastName.concat(data.lastName),
+					email: this.state.email.concat(data.email),
+					password: this.state.password.concat(data.password)
+        });
+      })
+      .catch((err) => console.log('Ocurrio un error en la conexion'));
+      
 	};
 
 	handleChange = (e) => {
@@ -78,7 +79,7 @@ export default class signup extends React.Component {
 						Sign up
 					</Typography>
 					<hr />
-					<ValidatorForm className={classes.form} onSubmit={this.reset} >
+					<ValidatorForm className={classes.form} onSubmit={this.reset}>
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={6}>
 								<TextValidator
