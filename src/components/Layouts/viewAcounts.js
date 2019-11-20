@@ -71,12 +71,15 @@ export default class Views extends React.Component {
     .then(data=>{
         console.log(data);
 
-        let index = this.state.account_list.find(value=>{
+        let element = this.state.account_list.find(value=>{
             return value._id === account._id;
         })
 
         let buffer_list = this.state.account_list.slice();
-        buffer_list.splice(index, 1);
+		
+		let index = buffer_list.indexOf(element);
+		
+		buffer_list.splice(index,1);
 
         this.setState({
             account_list: buffer_list
