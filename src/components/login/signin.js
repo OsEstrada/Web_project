@@ -3,7 +3,6 @@ import classes from  "./styles.module.css";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import {Link} from "react-router-dom";
@@ -12,9 +11,48 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserLock } from '@fortawesome/free-solid-svg-icons';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
+import API from '../../utils/apiUrlBase';
 
 export default class signin extends React.Component{
-    
+  constructor(props) {
+		super(props);
+		this.state = {
+			email: '',
+			password: ''
+		};
+  }
+
+  handleSubmit = () => {
+		let options = {
+			method: 'GET',
+			headers: {
+				'Content-type': 'application/json',
+				Accept: 'application/json'
+			},
+
+			body: JSON.stringify(this.state)
+		};
+
+		fetch(`${API.baseURL}/users/:user`, options)
+			.then((res) => {
+				return res.json();
+			})
+			.then((data) => {
+				console.log(data);
+
+				
+			})
+			.catch((err) => console.log('Ocurrio un error en la conexion'));
+	};
+  
+  handleChange = (e) => {
+		let returnValue = {
+			[e.target.name]: e.target.value
+		};
+		this.setState(returnValue);
+  };
+  
     render(){
        
         return(
@@ -29,29 +67,30 @@ export default class signin extends React.Component{
               <Typography component="h1" variant="h5" className={classes.Typography}>
                 Sign in
               </Typography>
-              <form className={classes.form} noValidate>
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
+              <ValidatorForm className={classes.form} onSubmit={this.handleSubmit}>
+              <TextValidator
+									variant="outlined"
                   autoFocus
-                />
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                />
+									fullWidth
+									label="Correo Electrónico"
+									name="email"
+                  value={this.state.email}
+									onChange={this.handleChange}
+									validators={[ 'required', 'isEmail' ]}
+									errorMessages={[ 'this field is required', 'email is not valid' ]}
+								/>
+                <TextValidator
+									variant="outlined"
+									required
+									fullWidth
+									name="password"
+									label="Contraseña"
+									type="password"
+									id="password"
+									value={this.state.password}
+									onChange={this.handleChange}
+									autoComplete="current-password"
+								/>
                 <FormControlLabel
                   control={<Checkbox value="remember" color="primary" />}
                   label="Remember me"
@@ -74,7 +113,7 @@ export default class signin extends React.Component{
                     </Link>
                   </Grid>
                 </Grid>
-              </form>
+              </ValidatorForm>
             </div>
           </Grid>
         </Grid>

@@ -93,14 +93,8 @@ export default class Views extends React.Component {
 						this.handleSubmit(transaction);
 					}}
 				/>
+				<TransactionTable/>
 
-        <div style={{display:'flex', flexFlow: 'row wrap', justifyContent: 'center'}}>
-          {this.state.transaction_list.map((element) => {
-            return <TransactionTable key={element._id} transaction={element} onDelete= {()=>{
-                    this.handleDelete(element);
-                }} />;
-          })}
-        </div>
 			</div>
 		);
 	}
