@@ -3,7 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import classes from './styles.module.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, Route } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -18,18 +18,19 @@ export default class signup extends React.Component {
 			firstName: '',
 			lastName: '',
 			email: '',
-			password: ''
+			password: '',
+			islogged: false
 		};
 	}
 
-  reset = () => {
-    this.setState({
-      firstName: '',
+	reset = () => {
+		this.setState({
+			firstName: '',
 			lastName: '',
 			email: '',
 			password: ''
-    });
-  }
+		});
+	}
 
 	handleSubmit = () => {
 		let options = {
@@ -48,16 +49,18 @@ export default class signup extends React.Component {
 			})
 			.then((data) => {
 				console.log(data);
+				if (data.success === true) { this.setState({ islogged: !this.islogged }) }
+				else {
+					this.setState({
+						firstName: '',
+						lastName: '',
+						email: '',
+						password: ''
+					})
+				};
+			})
+			.catch((err) => console.log('Ocurrio un error en la conexion'));
 
-				this.setState({
-					firstName: this.state.firstName.concat(data.firstName),
-					lastName: this.state.lastName.concat(data.lastName),
-					email: this.state.email.concat(data.email),
-					password: this.state.password.concat(data.password)
-        });
-      })
-      .catch((err) => console.log('Ocurrio un error en la conexion'));
-      
 	};
 
 	handleChange = (e) => {
@@ -70,6 +73,9 @@ export default class signup extends React.Component {
 	render() {
 		return (
 			<Container component="main" maxWidth="xs">
+				<Route>
+					{(this.state.islogged === true) ? <Redirect to="/" /> : <Sign-Up />}
+				</Route>
 				<CssBaseline />
 				<div className={classes.paper_signup}>
 					<Avatar>
@@ -114,10 +120,10 @@ export default class signup extends React.Component {
 									fullWidth
 									label="Correo Electrónico"
 									name="email"
-                  value={this.state.email}
+									value={this.state.email}
 									onChange={this.handleChange}
-									validators={[ 'required', 'isEmail' ]}
-									errorMessages={[ 'this field is required', 'email is not valid' ]}
+									validators={['required', 'isEmail']}
+									errorMessages={['this field is required', 'email is not valid']}
 								/>
 							</Grid>
 							<Grid item xs={12}>
@@ -142,7 +148,7 @@ export default class signup extends React.Component {
 								variant="contained"
 								color="primary"
 								className="submit_btn"
-                onClick={this.handleSubmit}
+								onClick={this.handleSubmit}
 							>
 								Sign Up
 							</Button>

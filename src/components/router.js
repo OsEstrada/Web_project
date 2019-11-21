@@ -9,13 +9,8 @@ import {BrowserRouter, Route, Switch} from "react-router-dom"
 class login extends React.Component{
   constructor(props){
     super(props)
-    this.state = {SignInActive: true}
+    this.state = {islogged: false}
   }
-
-  isSignInActive=(event)=>{
-    this.setState({SignInActive:!this.state.SignInActive})
-  }
-
 
   render(){
     return(
