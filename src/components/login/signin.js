@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import API from '../../utils/apiUrlBase';
+import classes from './styles.module.css';
 
 export default class signin extends React.Component{
   constructor(props) {
