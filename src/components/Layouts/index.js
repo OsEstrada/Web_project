@@ -7,9 +7,11 @@ import Footer from '../Layouts/footer';
 import NavBar from '../Layouts/navbar';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import Menu from '../Layouts/Menu';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ViewAcounts from '../Layouts/viewAcounts';
+import Button from '@material-ui/core/Button';
 import Transaction from '../Layouts/Transaction';
+import Image from '../../utils/images/piggy.jpg';
 
 const drawerWidth = 240;
 
@@ -18,11 +20,10 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex'
 	},
 	appBar: {
-		backgroundColor: '#2a2a72',
-		backgroundImage: 'linear-gradient(315deg, #2a2a72 0%, #009ffd 74%)',
+		backgroundColor: '#46344E',
 		width: `calc(100% - ${drawerWidth}px)`,
 		marginLeft: drawerWidth,
-		height: '10vh'
+		height: '8vh'
 	},
 	drawer: {
 		width: drawerWidth,
@@ -33,8 +34,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	toolbar: theme.mixins.toolbar,
 	nav_item: {
-		backgroundColor: '#2a2a72',
-		backgroundImage: 'linear-gradient(315deg, #2a2a72 0%, #009ffd 74%)',
+		backgroundColor: '#46344E',
 		marginTop: '10vh',
 		color: 'white',
 		height: '90vh',
@@ -44,8 +44,12 @@ const useStyles = makeStyles((theme) => ({
 	},
 	content: {
 		flexGrow: 1,
-		backgroundColor: theme.palette.background.default,
-		padding: theme.spacing(3)
+		backgroundImage: `url(${Image})`,
+		backgroundRepeat: 'no-repeat',
+		backgroundPosition: 'center center',
+		backgroundSize: 'cover',
+		backgroundAttachment: 'fixed',
+		height: '100vh'
 	},
 	bodycontainer: {
 		marginTop: '10vh',
@@ -53,24 +57,27 @@ const useStyles = makeStyles((theme) => ({
 		overflowY: 'auto'
 	},
 	logocontainer: {
-		backgroundColor: '#2a2a72',
-		backgroundImage: 'linear-gradient(315deg, #2a2a72 0%, #009ffd 0%)',
+		backgroundColor: '#46344E',
 		position: 'fixed',
 		width: drawerWidth,
-		minHeight: '10vh'
+		minHeight: '20vh'
 	},
 	logo: {
-		Top: '0',
-		marginLeft: '80px',
-		width: '80px'
+		marginLeft: '35px',
+		width: '70%'
 	},
 	avatar: {
-		marginTop: '15px',
-		width: 60,
-		height: 60,
+		marginTop: '10px',
+		width: 50,
+		height: 50
 	},
 	barcontainer: {
-		paddingRight: theme.spacing(6),
+		paddingRight: theme.spacing(6)
+	},
+	icon: {
+		fontSize:'2.3em', 
+		color:"white",
+		marginTop:'10px'
 	}
 }));
 
@@ -83,11 +90,13 @@ export default (props) => {
 			<AppBar position="fixed" className={classes.appBar}>
 				<Grid container justify="flex-end" alignItems="center" className={classes.barcontainer}>
 					<Avatar alt="user" src="user-512.jpg" className={classes.avatar} />
-					<Menu/>
+					<Button>
+						<ExitToAppIcon className={classes.icon}/>
+					</Button>
 				</Grid>
 			</AppBar>
 			<div className={classes.logocontainer}>
-				<img src="logoA.png" alt="logo" className={classes.logo} />
+				<img src="GW.png" alt="logo" className={classes.logo} />
 			</div>
 
 			<Drawer
@@ -102,7 +111,7 @@ export default (props) => {
 			</Drawer>
 			<main className={classes.content}>
 				<div className={classes.bodycontainer}>
-					<ViewAcounts/>
+					<ViewAcounts />
 				</div>
 				<Footer />
 			</main>

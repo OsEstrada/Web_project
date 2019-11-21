@@ -21,7 +21,7 @@ class login extends React.Component{
     return(
       <BrowserRouter>
       <Switch>
-          <Route path="/" exact component={Adm}/>
+          <Route path="/" exact component={Main}/>
           <Route path="/Sign-In" exact component={Signin}/> 
           <Route path="/Sign-Up" exact component ={Signup}/>
       </Switch>

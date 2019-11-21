@@ -1,5 +1,4 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -12,9 +11,19 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Box from '@material-ui/core/Box';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
+import TextField from '@material-ui/core/TextField'
+import { withStyles } from '@material-ui/core/styles'
 
+const styles = theme => ({
+    styledHeader: {
+        '& h2': {
+          color: '#5a5560',
+        }
+	},
+	buttons: {
+		color: '#5a5560'
+	}
+})
 
 class AddAccount extends React.Component {
 	constructor(props) {
@@ -26,8 +35,10 @@ class AddAccount extends React.Component {
 			name: '',
 			type: this.options[0],
 			amount: '',
-			open: false
+			open: false,
 		};
+
+		this.amountRegex = new RegExp('^d{1,3}(,d{3})*(.dd)?$');
 	}
 
 	handleClickOpen = () => {
@@ -38,6 +49,9 @@ class AddAccount extends React.Component {
 
 	handleClose = () => {
 		this.setState({
+			name: '',
+			type: this.options[0],
+			amount: '',
 			open: false
 		});
 	};
@@ -46,16 +60,15 @@ class AddAccount extends React.Component {
 		let returnValue = {
 			[e.target.name]: e.target.value
 		};
-
 		this.setState(returnValue);
 	};
 
 	render() {
 		return (
 			<div>
-				<Box display="flex" padding="3%" justifyContent="flex-end">
+				<Box display="flex" paddingRight="4%" paddingTop="1%" justifyContent="flex-end">
 					<Fab
-						color="primary"
+						color="inherit"
 						aria-label="add"
 						style={{ width: '80', height: '80' }}
 						onClick={this.handleClickOpen}
@@ -64,9 +77,9 @@ class AddAccount extends React.Component {
 					</Fab>
 				</Box>
 				<Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-					<DialogTitle id="form-dialog-title">Agregar Cuenta</DialogTitle>
-					<DialogContent>
-						<TextField
+					<DialogTitle id="form-dialog-title" className={this.props.classes.styledHeader} >Agregar Cuenta</DialogTitle>
+				<DialogContent>	
+					<TextField
 							autoFocus
 							margin="dense"
 							name="name"
@@ -75,7 +88,7 @@ class AddAccount extends React.Component {
 							onChange={this.handleChange}
 							fullWidth
 						/>
-						<FormControl style={{ marginTop: '5%' }} fullWidth>
+						<FormControl style={{ marginTop: '5%', marginBottom: '5%' }} fullWidth>
 							<InputLabel>Tipo de Cuenta</InputLabel>
 							<Select value={this.state.type} onChange={this.handleChange} name="type">
 								{this.options.map((a) => (
@@ -86,18 +99,22 @@ class AddAccount extends React.Component {
 							</Select>
 						</FormControl>
 
-						<FormControl style={{ marginTop: '5%' }} fullWidth>
-						<InputLabel> Amount</InputLabel>
-						<OutlinedInput
+						<TextField
+							autoFocus
+							margin="dense"
 							name="amount"
 							value={this.state.amount}
+							label="Cantidad de monto"
+							type="number"
 							onChange={this.handleChange}
-							startAdornment={<InputAdornment position="start">$</InputAdornment>}
+							fullWidth
 						/>
-						</FormControl>
+						
 					</DialogContent>
 					<DialogActions>
-						<Button onClick={this.handleClose} color="primary">
+						<Button 
+							onClick={this.handleClose}
+							className= {this.props.classes.buttons}>
 							Cancelar
 						</Button>
 						<Button
@@ -109,7 +126,7 @@ class AddAccount extends React.Component {
 								});
 								this.handleClose();
 							}}
-							color="primary"
+							className= {this.props.classes.buttons}
 						>
 							Agregar
 						</Button>
@@ -120,4 +137,4 @@ class AddAccount extends React.Component {
 	}
 }
 
-export default AddAccount;
+export default withStyles(styles)(AddAccount);

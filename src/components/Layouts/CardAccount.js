@@ -5,21 +5,23 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 class CardAccount extends React.Component {
 	render() {
 		let account = this.props.account;
 		return (
-			<Card style={{ minWidth: '400px', backgroundColor: '#7cffcb', margin: '1%', backgroundImage:'linear-gradient(315deg, #7cffcb 0%, #74f2ce 74%)'}}>
+			<Card style={{ minWidth: '350px', backgroundColor: 'inherit ', margin: '1%'}}>
 				<CardActionArea>
 					<CardContent>
-						<Typography gutterBottom variant="h5" component="h2">
+						<h2 style={{ color: '#faed26', fontSize: '30px', margin:'5px'}}>
 							{account.name}
-						</Typography>
-						<Typography variant="body1" color="textSecondary" component="p">
+						</h2>
+						<Divider style={{marginBottom:'10px'}}/>
+						<Typography variant="h6" component="p" >
 							Tipo de cuenta: {account.type}
 						</Typography>
-						<Typography variant="body1" color="textSecondary" component="p">
+						<Typography variant="h6" component="p">
 							Monto: ${account.amount}
 						</Typography>
 					</CardContent>
@@ -27,7 +29,7 @@ class CardAccount extends React.Component {
 				<CardActions>
 					<Button
 						size="small"
-						color="primary"
+						color="secondary"
 						onClick={() => {
 							this.props.onDelete();
 						}}
