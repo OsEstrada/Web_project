@@ -20,19 +20,14 @@ export default (props) => {
     columns: [
       { title: 'Cuenta', field: 'cuenta' },
       { title: 'Fecha', field: 'fecha', type: 'date' },
-      {
-        title: 'Tipo de transaccion',
-        field: 'tipo',
-        lookup: { 1: 'Abono', 2: 'Egreso' },
-      },
       { title: 'Monto', field: 'monto', type: 'numeric' },
       { title: 'Categoria', field: 'categoria' },
 
     ],
     data: [
-      { cuenta: 'Mehmet', fecha: 25-10-2019 , tipo: 1, monto: 63.45, categoria: '' },
+      { cuenta: 'Mehmet', fecha: 25-10-2019 , monto: 63.45, categoria: '' },
       {
-        cuenta: 'Adriana', fecha: 31-10-2019 , tipo: 2, monto: 90.45, categoria: 'vivienda'
+        cuenta: 'Adriana', fecha: 31-10-2019 , monto: 90.45, categoria: 'vivienda'
       },
     ],
   });

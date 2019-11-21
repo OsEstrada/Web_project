@@ -17,13 +17,20 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		display: 'flex'
+		display: 'flex',
+		backgroundImage: `url(${Image})`,
+		backgroundRepeat: 'no-repeat',
+		backgroundPosition: 'center center',
+		backgroundSize: 'cover',
+		backgroundAttachment: 'fixed',
+		height: '100vh'
+
 	},
 	appBar: {
-		backgroundColor: '#46344E',
 		width: `calc(100% - ${drawerWidth}px)`,
 		marginLeft: drawerWidth,
-		height: '8vh'
+		height: '8vh',
+		backgroundColor: 'rgba(70, 52, 70, 0.3)'
 	},
 	drawer: {
 		width: drawerWidth,
@@ -34,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 	toolbar: theme.mixins.toolbar,
 	nav_item: {
-		backgroundColor: '#46344E',
-		marginTop: '10vh',
+		backgroundColor: 'rgba(70, 52, 70, 0.3)',
+		marginTop: '12vh',
 		color: 'white',
 		height: '90vh',
 		width: drawerWidth,
@@ -44,12 +51,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 	content: {
 		flexGrow: 1,
-		backgroundImage: `url(${Image})`,
-		backgroundRepeat: 'no-repeat',
-		backgroundPosition: 'center center',
-		backgroundSize: 'cover',
-		backgroundAttachment: 'fixed',
-		height: '100vh'
 	},
 	bodycontainer: {
 		marginTop: '10vh',
@@ -57,10 +58,10 @@ const useStyles = makeStyles((theme) => ({
 		overflowY: 'auto'
 	},
 	logocontainer: {
-		backgroundColor: '#46344E',
+		backgroundColor: 'rgba(70, 52, 70, 0.3)',
 		position: 'fixed',
 		width: drawerWidth,
-		minHeight: '20vh'
+		minHeight: '10vh'
 	},
 	logo: {
 		marginLeft: '35px',
