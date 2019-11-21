@@ -9,19 +9,14 @@ import {BrowserRouter, Route, Switch} from "react-router-dom"
 class login extends React.Component{
   constructor(props){
     super(props)
-    this.state = {SignInActive: true}
+    this.state = {islogged: false}
   }
-
-  isSignInActive=(event)=>{
-    this.setState({SignInActive:!this.state.SignInActive})
-  }
-
 
   render(){
     return(
       <BrowserRouter>
       <Switch>
-          <Route path="/" exact component={Adm}/>
+          <Route path="/" exact component={Main}/>
           <Route path="/Sign-In" exact component={Signin}/> 
           <Route path="/Sign-Up" exact component ={Signup}/>
       </Switch>
