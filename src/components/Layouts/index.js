@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -11,11 +11,12 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ViewAcounts from '../Layouts/viewAcounts';
 import Button from '@material-ui/core/Button';
 import Transaction from '../Layouts/Transaction';
+import Chat from '../Layouts/Chat';
 import Image from '../../utils/images/piggy.jpg';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
+const styles = (theme) => ({
 	root: {
 		display: 'flex',
 		backgroundImage: `url(${Image})`,
@@ -24,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
 		backgroundSize: 'cover',
 		backgroundAttachment: 'fixed',
 		height: '100vh'
-
 	},
 	appBar: {
 		width: `calc(100% - ${drawerWidth}px)`,
@@ -42,15 +42,14 @@ const useStyles = makeStyles((theme) => ({
 	toolbar: theme.mixins.toolbar,
 	nav_item: {
 		backgroundColor: 'rgba(70, 52, 70, 0.3)',
-		marginTop: '12vh',
 		color: 'white',
-		height: '90vh',
+		height: '100vh',
 		width: drawerWidth,
 		flexDirection: 'column',
 		justifyContent: 'center'
 	},
 	content: {
-		flexGrow: 1,
+		flexGrow: 1
 	},
 	bodycontainer: {
 		marginTop: '10vh',
@@ -58,7 +57,6 @@ const useStyles = makeStyles((theme) => ({
 		overflowY: 'auto'
 	},
 	logocontainer: {
-		backgroundColor: 'rgba(70, 52, 70, 0.3)',
 		position: 'fixed',
 		width: drawerWidth,
 		minHeight: '10vh'
@@ -76,46 +74,54 @@ const useStyles = makeStyles((theme) => ({
 		paddingRight: theme.spacing(6)
 	},
 	icon: {
-		fontSize:'2.3em', 
-		color:"white",
-		marginTop:'10px'
+		fontSize: '2.3em',
+		color: 'white',
+		marginTop: '10px'
+	},
+	widget: {
+		position: 'relative'
 	}
-}));
+});
 
-export default (props) => {
-	const classes = useStyles();
-
-	return (
-		<div className={classes.root}>
-			<CssBaseline />
-			<AppBar position="fixed" className={classes.appBar}>
-				<Grid container justify="flex-end" alignItems="center" className={classes.barcontainer}>
-					<Avatar alt="user" src="user-512.jpg" className={classes.avatar} />
-					<Button>
-						<ExitToAppIcon className={classes.icon}/>
-					</Button>
-				</Grid>
-			</AppBar>
-			<div className={classes.logocontainer}>
-				<img src="GW.png" alt="logo" className={classes.logo} />
-			</div>
-
-			<Drawer
-				className={classes.drawer}
-				variant="permanent"
-				classes={{
-					paper: classes.nav_item
-				}}
-				anchor="left"
-			>
-				<NavBar />
-			</Drawer>
-			<main className={classes.content}>
-				<div className={classes.bodycontainer}>
-					<ViewAcounts />
+class Main extends React.Component {
+	render() {
+		return (
+			<div className={this.props.classes.root}>
+				<CssBaseline />
+				<AppBar position="fixed" className={this.props.classes.appBar}>
+					<Grid container justify="flex-end" alignItems="center" className={this.props.classes.barcontainer}>
+						<Avatar alt="user" src="user-512.jpg" className={this.props.classes.avatar} />
+						<Button>
+							<ExitToAppIcon className={this.props.classes.icon} />
+						</Button>
+					</Grid>
+				</AppBar>
+				<div className={this.props.classes.logocontainer}>
+					<img src="GW.png" alt="logo" className={this.props.classes.logo} />
 				</div>
-				<Footer />
-			</main>
-		</div>
-	);
-};
+
+				<Drawer
+					className={this.props.classes.drawer}
+					variant="permanent"
+					classes={{
+						paper: this.props.classes.nav_item
+					}}
+					anchor="left"
+				>
+					<NavBar />
+				</Drawer>
+				<main className={this.props.classes.content}>
+					<div className={this.props.classes.bodycontainer}>
+						<ViewAcounts />
+					</div>
+					<div className={this.props.classes.widget}>
+						<Chat />
+					</div>
+					<Footer />
+				</main>
+			</div>
+		);
+	}
+}
+
+export default withStyles(styles)(Main);
