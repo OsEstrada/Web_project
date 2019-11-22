@@ -1,18 +1,11 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
 import Footer from '../Layouts/footer';
-import NavBar from '../Layouts/navbar';
-import Avatar from '@material-ui/core/Avatar';
-import Grid from '@material-ui/core/Grid';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ViewAcounts from '../Layouts/viewAcounts';
-import Button from '@material-ui/core/Button';
 import Transaction from '../Layouts/Transaction';
 import Chat from '../Layouts/Chat';
 import Image from '../../utils/images/piggy.jpg';
+import {Button, Tab, Tabs, Box, Avatar, Grid, AppBar, CssBaseline, Drawer, withStyles} from '@material-ui/core'
 
 const drawerWidth = 240;
 
@@ -80,10 +73,46 @@ const styles = (theme) => ({
 	},
 	widget: {
 		position: 'relative'
+	},
+	tab_list: {
+		marginTop: '30%',
+		marginBottom: '30%',
+		alignSelf: 'center',
+		width: '100%'
 	}
 });
 
 class Main extends React.Component {
+	constructor(props){
+		super(props)
+		this.state = {
+			value: 0
+		}
+	}
+
+	handleChange = (event, newValue) => {
+		this.setState({value:newValue});
+	};
+
+	a11yProps=(index)=>{
+		return {
+			id: `vertical-tab-${index}`,
+			'aria-controls': `vertical-tabpanel-${index}`
+		};
+	}
+
+	TabPanel=(props)=> {
+		const { children, value, index} = props;
+	  
+		return (
+		  <div
+			hidden={value !== index}
+		  >
+			<Box>{children}</Box>
+		  </div>
+		);
+	  }
+
 	render() {
 		return (
 			<div className={this.props.classes.root}>
@@ -108,11 +137,31 @@ class Main extends React.Component {
 					}}
 					anchor="left"
 				>
-					<NavBar />
+					<div className={this.props.classes.tab_list}>
+						<Tabs
+							orientation="vertical"
+							variant="fullWidth"
+							value={this.state.value}
+							onChange={this.handleChange}
+							aria-label="Vertical tabs example"
+						>
+							<Tab label="Cuentas" {...this.a11yProps(0)} style={{ fontSize: '1em' }} />
+							<Tab label="Transacciones" {...this.a11yProps(1)} style={{ fontSize: '1em' }} />
+							<Tab label="Categorias" {...this.a11yProps(2)} style={{ fontSize: '1em' }} />
+						</Tabs>
+					</div>
 				</Drawer>
 				<main className={this.props.classes.content}>
 					<div className={this.props.classes.bodycontainer}>
-						<ViewAcounts />
+						<this.TabPanel value={this.state.value} index={0}>
+							<ViewAcounts/>
+						</this.TabPanel>
+						<this.TabPanel value={this.state.value} index={1}>
+							Aqui van las transacciones
+						</this.TabPanel>
+						<this.TabPanel value={this.state.value} index={2}>
+							Aqui iran las categorias
+						</this.TabPanel>
 					</div>
 					<div className={this.props.classes.widget}>
 						<Chat />
