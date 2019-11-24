@@ -12,8 +12,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+.container{
+  overflow: auto;
+  width: 100%;
+  height: 78vh;
+}
+
 .message {
   overflow: hidden;
+  width: 100%;
 }
 
 .balon1 {

@@ -14,7 +14,7 @@ class Agent extends React.Component {
 		selectedCustomer: '',
 		chat: [],
 		chatIsLoading: false,
-		customerIsLoading: true
+		customerIsLoading: true,
 	};
 
 	componentDidMount() {
@@ -141,7 +141,8 @@ class Agent extends React.Component {
 	};
 
 	render() {
-		return <ResponsiveDrawer {...this.state} selectCustomer={this.selectCustomer} handleSubmit={this.handleSubmit}/>;
+		return <ResponsiveDrawer {...this.state} selectCustomer={this.selectCustomer}
+		onSubmit={(message)=>this.handleSubmit(message)}/>;
 	}
 }
 

@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import Toolbar from '@material-ui/core/Toolbar';
-import TextField from '@material-ui/core/TextField';
+import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -18,13 +18,17 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import config from '../../utils/config';
+import Input from '@material-ui/core/Input';
+import { inherits } from 'util';
 
 const drawerWidth = 240;
 const agentUID = config.agentUID;
 
 const styles = (theme) => ({
 	root: {
-		display: 'flex'
+		display: 'flex',
+		height: '100vh',
+		backgroundColor: '#CBDCEA'
 	},
 	drawer: {
 		[theme.breakpoints.up('sm')]: {
@@ -50,8 +54,9 @@ const styles = (theme) => ({
 		width: drawerWidth
 	},
 	content: {
+		display: 'flex',
 		flexGrow: 1,
-		padding: theme.spacing(3)
+		justifyContent: 'center'
 	},
 	avatar: {
 		width: 40,
@@ -67,19 +72,21 @@ class ResponsiveDrawer extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { mobileOpen: false, message:'' };
+		this.state = { mobileOpen: false, message: '' };
+		this.handleChange = this.handleChange.bind(this);
 	}
 
 	handleDrawerToggle = () => {
 		this.setState({ mobileOpen: !this.state.mobileOpen });
 	};
 
-	handleChange = (e) => {
-		this.setState({
-			message: e.target.value
-		})
+	handleClose = () => {
+		this.setState({ message: '' });
 	};
 
+	handleChange(event) {
+		this.setState({ message: event.target.value });
+	}
 
 	render() {
 		const { classes, theme } = this.props;
@@ -141,42 +148,47 @@ class ResponsiveDrawer extends React.Component {
 					</Hidden>
 				</nav>
 				<main className={classes.content}>
-					<div className="row pt-5 bg-white" style={{ height: 800, width: '100%', overflow: 'auto' }}>
-						<ChatBox {...this.props} />
+					<div style={{ width: '100%' }} height={100}>
+						<Box display="flex" alignItems="center" p={1} m={1} height="80%">
+							<Box bgcolor="white" flexGrow={1} height="100%" borderRadius="20px">
+								<ChatBox {...this.props} />
+							</Box>
+						</Box>
+						<Box display="flex" alignItems="center" p={1} m={2} bgcolor="white" borderRadius="20px">
+							<Box flexGrow={1}>
+								<Input
+									placeholder="Escribe tu mensaje"
+									className={classes.input}
+									inputProps={{
+										'aria-label': 'description'
+									}}
+									value={this.state.message}
+									onChange={this.handleChange}
+									fullWidth
+								/>
+							</Box>
+							<Box p={1}>
+								<Fab
+									color="secondary"
+									style={{ width: '10', height: '10' }}
+									onClick={() => {
+										this.props.onSubmit(this.state.message);
+										this.handleClose();
+									}}
+								>
+									<SendRoundedIcon />
+								</Fab>
+							</Box>
+						</Box>
 					</div>
-					<form className="row m-2 p-0 w-100">
-						<div className="col-11 m-0">
-							<TextField
-								className={classes.margin}
-								placeholder="Escribe tu mensaje"
-								variant="outlined"
-								value= {this.state.message}
-								onChange= {this.handleChange}
-								fullWidth
-							/>
-						</div>
-						<div style={{marginLeft:'20px'}}>
-							<Fab
-								color="primary"
-								aria-label="send"
-								style={{ width: '50', height: '50' }}
-								onClick={this.props.handleSubmit(this.state.message)}
-							>
-								<SendRoundedIcon style={{ width: '30', height: '30' }} />
-							</Fab>
-						</div>
-					</form>
 				</main>
+				<div />
 			</div>
 		);
 	}
 }
 
 ResponsiveDrawer.propTypes = {
-	/**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
 	container: PropTypes.instanceOf(typeof Element === 'undefined' ? Object : Element)
 };
 
@@ -184,17 +196,15 @@ class ChatBox extends React.Component {
 	render() {
 		const { chat, chatIsLoading } = this.props;
 		if (chatIsLoading) {
-			return (
-				<div className="col-xl-12 my-auto text-center">
-					<CircularProgress color="secondary" />
-				</div>
-			);
+			return (<div className='container col-xl-12'>>
+				<CircularProgress color="secondary" />;
+			</div>);
 		} else {
 			return (
-				<div className="col-xl-12">
+				<div className='container col-xl-12'>>
 					{chat.map((chat) => (
 						<div key={chat.id} className="message">
-							<div className={`${chat.receiver !== agentUID ? 'balon1' : 'balon2'} p-3 m-1`}>
+							<div className={`${chat.receiver !== agentUID ? 'balon1' : 'balon2'} p-3 mt-1 mb-1`}>
 								{chat.text}
 							</div>
 						</div>
