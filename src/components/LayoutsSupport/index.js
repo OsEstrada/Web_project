@@ -28,7 +28,7 @@ const styles = (theme) => ({
 	root: {
 		display: 'flex',
 		height: '100vh',
-		backgroundColor: '#CBDCEA'
+		backgroundColor: '#D0EFED'
 	},
 	drawer: {
 		[theme.breakpoints.up('sm')]: {
@@ -41,13 +41,20 @@ const styles = (theme) => ({
 			width: `calc(100% - ${drawerWidth}px)`,
 			marginLeft: drawerWidth
 		},
-		backgroundColor: 'rgb(70, 52, 70)'
+		backgroundColor: '#5DEDE4',
+		color: '#26948D',
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
 		[theme.breakpoints.up('sm')]: {
 			display: 'none'
 		}
+	},
+	customerstittle: {
+		color: '#26948D',
+		fontSize: '2em',
+		marginLeft: theme.spacing(2),
+		marginTop: theme.spacing(2),
 	},
 	toolbar: theme.mixins.toolbar,
 	drawerPaper: {
@@ -65,6 +72,9 @@ const styles = (theme) => ({
 	icon: {
 		fontSize: '2.3em',
 		color: 'white'
+	},
+	fab: {
+		backgroundColor: '#5DEDE4'
 	}
 });
 
@@ -105,7 +115,7 @@ class ResponsiveDrawer extends React.Component {
 						>
 							<MenuIcon />
 						</IconButton>
-						<Typography variant="h6" noWrap>
+						<Typography variant="h6">
 							Messages
 						</Typography>
 
@@ -169,14 +179,14 @@ class ResponsiveDrawer extends React.Component {
 							</Box>
 							<Box p={1}>
 								<Fab
-									color="secondary"
-									style={{ width: '10', height: '10' }}
+									className={classes.fab}
+									style={{ width: '10', height: '15'}}
 									onClick={() => {
 										this.props.onSubmit(this.state.message);
 										this.handleClose();
 									}}
 								>
-									<SendRoundedIcon />
+									<SendRoundedIcon className={classes.icon}/>
 								</Fab>
 							</Box>
 						</Box>
@@ -196,12 +206,16 @@ class ChatBox extends React.Component {
 	render() {
 		const { chat, chatIsLoading } = this.props;
 		if (chatIsLoading) {
-			return (<div className='container col-xl-12'>>
-				<CircularProgress color="secondary" />;
-			</div>);
+			return (
+				<div className="container col-xl-12">
+					>
+					<CircularProgress color="secondary" />;
+				</div>
+			);
 		} else {
 			return (
-				<div className='container col-xl-12'>>
+				<div className="container col-xl-12">
+					>
 					{chat.map((chat) => (
 						<div key={chat.id} className="message">
 							<div className={`${chat.receiver !== agentUID ? 'balon1' : 'balon2'} p-3 mt-1 mb-1`}>
@@ -217,26 +231,31 @@ class ChatBox extends React.Component {
 
 class CustomerList extends React.Component {
 	render() {
-		const { customers, customerIsLoading, selectedCustomer } = this.props;
+		const { customers, customerIsLoading, selectedCustomer, classes } = this.props;
 		if (customerIsLoading) {
 			return (
 				<div className="col-xl-12 my-auto text-center">
-					<CircularProgress color="secondary" />
+					<CircularProgress color="primary" />
 				</div>
 			);
 		} else {
 			return (
-				<ul className="list-group list-group-flush w-100">
-					{customers.map((customer) => (
-						<li
-							key={customer.uid}
-							className={`list-group-item ${customer.uid === selectedCustomer ? 'active' : ''}`}
-							onClick={() => this.props.selectCustomer(customer.uid)}
-						>
-							{customer.name}
-						</li>
-					))}
-				</ul>
+				<div>
+					<h1 className={classes.customerstittle}>
+						Lista de clientes
+					</h1>
+					<ul className="list-group list-group-flush w-100">
+						{customers.map((customer) => (
+							<li
+								key={customer.uid}
+								className={`list-group-item ${customer.uid === selectedCustomer ? 'active' : ''} font-weight-bold`}
+								onClick={() => this.props.selectCustomer(customer.uid)}
+							>
+								{customer.name}
+							</li>
+						))}
+					</ul>
+				</div>
 			);
 		}
 	}
