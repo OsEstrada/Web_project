@@ -13,7 +13,6 @@ CometChat.init(config.appID)
 
 render(
     <Provider store={store}>
-        {console.log(store)}
         <ConnectedApp />
     </Provider>,
     document.getElementById('root')

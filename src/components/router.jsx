@@ -1,12 +1,12 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import history from '../utils/userStorage/history';
+import {history} from '../utils/userStorage/history';
 import alertActions from '../actions/alert.actions';
 import { PrivateRoute } from './login/privateroute';
 import { signin } from './login/SignIn';
 import { signup } from './login/SignUp';
-import { Home } from './Layouts/Home';
+import {Home} from './Layouts/Home';
 
 class App extends React.Component {
 	constructor(props) {

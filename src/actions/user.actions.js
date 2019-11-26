@@ -1,7 +1,7 @@
 import userConstants from '../constants/user.constants';
 import userService from '../fetching/user.api';
 import alertActions from './alert.actions';
-import history from '../utils/userStorage/history';
+import {history} from '../utils/userStorage/history';
 
 const userActions = {
     login,

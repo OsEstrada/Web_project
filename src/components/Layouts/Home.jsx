@@ -193,5 +193,5 @@ const actionCreators = {
 }
 
 
-const connectedHomePage = connect(mapState, actionCreators)(withStyles(styles),Home);
+const connectedHomePage = withStyles(styles)(connect(mapState, actionCreators)(Home));
 export { connectedHomePage as Home };
