@@ -1,4 +1,4 @@
-export const userConstants = {
+const userConstants = {
     REGISTER_REQUEST: 'USERS_REGISTER_REQUEST',
     REGISTER_SUCCESS: 'USERS_REGISTER_SUCCESS',
     REGISTER_FAILURE: 'USERS_REGISTER_FAILURE',
@@ -17,3 +17,5 @@ export const userConstants = {
     DELETE_SUCCESS: 'USERS_DELETE_SUCCESS',
     DELETE_FAILURE: 'USERS_DELETE_FAILURE'    
 };
+
+export default userConstants;

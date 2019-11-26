@@ -1,11 +1,14 @@
 import React from 'react';
-import Footer from '../Layouts/footer';
+import Footer from './footer';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import userActions from '../../actions/user.actions';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import ViewAcounts from '../Layouts/viewAcounts';
-import Transaction from '../Layouts/Transaction';
-import Chat from '../Layouts/Chat';
+import ViewAcounts from './viewAcounts';
+import Transaction from './Transaction';
+import Chat from './Chat';
 import Image from '../../utils/images/piggy.jpg';
-import {Button, Tab, Tabs, Box, Avatar, Grid, AppBar, CssBaseline, Drawer, withStyles} from '@material-ui/core'
+import { Button, Tab, Tabs, Box, Avatar, Grid, AppBar, CssBaseline, Drawer, withStyles } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -82,45 +85,51 @@ const styles = (theme) => ({
 	}
 });
 
-class Main extends React.Component {
-	constructor(props){
-		super(props)
+class Home extends React.Component {
+	constructor(props) {
+		super(props);
 		this.state = {
 			value: 0
-		}
+		};
+	}
+
+	componentDidMount() {
+		this.props.getUsers();
 	}
 
 	handleChange = (event, newValue) => {
-		this.setState({value:newValue});
+		this.setState({ value: newValue });
 	};
 
-	a11yProps=(index)=>{
+	a11yProps = (index) => {
 		return {
 			id: `vertical-tab-${index}`,
 			'aria-controls': `vertical-tabpanel-${index}`
 		};
-	}
+	};
 
-	TabPanel=(props)=> {
-		const { children, value, index} = props;
-	  
+	TabPanel = (props) => {
+		const { children, value, index } = props;
+
 		return (
-		  <div
-			hidden={value !== index}
-		  >
-			<Box>{children}</Box>
-		  </div>
+			<div hidden={value !== index}>
+				<Box>{children}</Box>
+			</div>
 		);
-	  }
+	};
 
 	render() {
+		const { user, users } = this.props;
+
 		return (
 			<div className={this.props.classes.root}>
 				<CssBaseline />
 				<AppBar position="fixed" className={this.props.classes.appBar}>
 					<Grid container justify="flex-end" alignItems="center" className={this.props.classes.barcontainer}>
+						<h1>Hi {user.firstName}</h1>
 						<Avatar alt="user" src="user-512.jpg" className={this.props.classes.avatar} />
 						<Button>
+							<Link to="./SignIn">Logout</Link>
 							<ExitToAppIcon className={this.props.classes.icon} />
 						</Button>
 					</Grid>
@@ -154,7 +163,7 @@ class Main extends React.Component {
 				<main className={this.props.classes.content}>
 					<div className={this.props.classes.bodycontainer}>
 						<this.TabPanel value={this.state.value} index={0}>
-							<ViewAcounts/>
+							<ViewAcounts />
 						</this.TabPanel>
 						<this.TabPanel value={this.state.value} index={1}>
 							Aqui van las transacciones
@@ -173,4 +182,16 @@ class Main extends React.Component {
 	}
 }
 
-export default withStyles(styles)(Main);
+function mapState(state) {
+    const { users, authentication } = state;
+    const { user } = authentication;
+    return { user, users };
+}
+
+const actionCreators = {
+    getUsers: userActions.getAll,
+}
+
+
+const connectedHomePage = connect(mapState, actionCreators)(withStyles(styles),Home);
+export { connectedHomePage as Home };

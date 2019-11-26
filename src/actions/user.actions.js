@@ -1,9 +1,9 @@
-import userConstants from '../constants';
-import userService from '../services';
+import userConstants from '../constants/user.constants';
+import userService from '../fetching/user.api';
 import alertActions from './alert.actions';
-import history from '../_helpers';
+import history from '../utils/userStorage/history';
 
-export const userActions = {
+const userActions = {
     login,
     logout,
     register,
@@ -19,7 +19,7 @@ function login(username, password) {
             .then(
                 user => { 
                     dispatch(success(user));
-                    history.push('/');
+                    history.push('/Home');
                 },
                 error => {
                     dispatch(failure(error.toString()));
@@ -44,9 +44,9 @@ function register(user) {
 
         userService.register(user)
             .then(
-                user => { 
+                (user) => { 
                     dispatch(success());
-                    history.push('/login');
+                    history.push('/SignIn');
                     dispatch(alertActions.success('Registration successful'));
                 },
                 error => {
@@ -92,3 +92,5 @@ function _delete(id) {
     function success(id) { return { type: userConstants.DELETE_SUCCESS, id } }
     function failure(id, error) { return { type: userConstants.DELETE_FAILURE, id, error } }
 }
+
+export default userActions;

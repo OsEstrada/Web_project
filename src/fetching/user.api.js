@@ -1,7 +1,7 @@
 import API from '../utils/apiUrlBase';
 import { authHeader } from '../utils/userStorage/authHeader';
 
-export const userService = {
+const userService = {
     login,
     logout,
     register,
@@ -11,11 +11,11 @@ export const userService = {
     delete: _delete
 };
 
-function login(username, password) {
+function login(email, password) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ email, password })
     };
 
     return fetch(`${API.baseURL}/users/authenticate`, requestOptions)
@@ -88,7 +88,7 @@ function handleResponse(response) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
                 logout();
-                location.reload(true);
+                window.location.reload(true);
             }
 
             const error = (data && data.message) || response.statusText;
@@ -98,3 +98,5 @@ function handleResponse(response) {
         return data;
     });
 }
+
+export default userService;

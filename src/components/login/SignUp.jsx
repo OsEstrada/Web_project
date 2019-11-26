@@ -3,79 +3,69 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import classes from './styles.module.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Link, Redirect, Route } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import Container from '@material-ui/core/Container';
-import API from '../../utils/apiUrlBase';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-export default class signup extends React.Component {
+import userActions from '../../actions/user.actions';
+
+class signup extends React.Component {
 	constructor(props) {
-		super(props);
-		this.state = {
-			firstName: '',
-			lastName: '',
-			email: '',
-			password: '',
-			islogged: false
-		};
+        super(props);
+
+        this.state = {
+            user: {
+                firstname: '',
+                lastname: '',
+                email: '',
+                password: ''
+            },
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+	handleChange(event) {
+        const { name, value } = event.target;
+        const { user } = this.state;
+        this.setState({
+            user: {
+                ...user,
+                [name]: value
+            }
+        });
 	}
+	
+	reset() {
+        this.setState({
+            user: {
+                firstname: '',
+                lastname: '',
+                email: '',
+                password: ''
+            }
+        });
+    }
 
-	reset = () => {
-		this.setState({
-			firstName: '',
-			lastName: '',
-			email: '',
-			password: ''
-		});
-	}
-
-	handleSubmit = () => {
-		let options = {
-			method: 'POST',
-			headers: {
-				'Content-type': 'application/json',
-				Accept: 'application/json'
-			},
-
-			body: JSON.stringify(this.state)
-		};
-
-		fetch(`${API.baseURL}/users/create`, options)
-			.then((res) => {
-				return res.json();
-			})
-			.then((data) => {
-				console.log(data);
-				if (data.success === true) { this.setState({ islogged: !this.islogged }) }
-				else {
-					this.setState({
-						firstName: '',
-						lastName: '',
-						email: '',
-						password: ''
-					})
-				};
-			})
-			.catch((err) => console.log('Ocurrio un error en la conexion'));
-
-	};
-
-	handleChange = (e) => {
-		let returnValue = {
-			[e.target.name]: e.target.value
-		};
-		this.setState(returnValue);
-	};
+    handleSubmit(event) {
+        event.preventDefault();
+        const { user } = this.state;
+        if (user.firstname && user.lastname && user.email && user.password) {
+            this.props.register(user);
+        }
+    }
 
 	render() {
+		const { registering  } = this.props;
+		const { user} = this.state;
+		
 		return (
 			<Container component="main" maxWidth="xs">
-				<Route>
-					{(this.state.islogged === true) ? <Redirect to="/" /> : <Sign-Up />}
-				</Route>
 				<CssBaseline />
 				<div className={classes.paper_signup}>
 					<Avatar>
@@ -90,13 +80,12 @@ export default class signup extends React.Component {
 							<Grid item xs={12} sm={6}>
 								<TextValidator
 									autoComplete="fname"
-									name="firstName"
+									name="firstname"
 									variant="outlined"
 									required
 									fullWidth
-									id="firstName"
-									label="Nombres"
-									value={this.state.firstName}
+									label="Nombre"
+									value={user.firstname}
 									onChange={this.handleChange}
 									autoFocus
 								/>
@@ -106,11 +95,10 @@ export default class signup extends React.Component {
 									variant="outlined"
 									required
 									fullWidth
-									id="lastName"
-									label="Apellidos"
-									name="lastName"
+									label="Apellido"
+									name="lastname"
 									autoComplete="lname"
-									value={this.state.lastName}
+									value={user.lastname}
 									onChange={this.handleChange}
 								/>
 							</Grid>
@@ -120,7 +108,7 @@ export default class signup extends React.Component {
 									fullWidth
 									label="Correo Electrónico"
 									name="email"
-									value={this.state.email}
+									value={user.email}
 									onChange={this.handleChange}
 									validators={['required', 'isEmail']}
 									errorMessages={['this field is required', 'email is not valid']}
@@ -135,7 +123,7 @@ export default class signup extends React.Component {
 									label="Contraseña"
 									type="password"
 									id="password"
-									value={this.state.password}
+									value={user.password}
 									onChange={this.handleChange}
 									autoComplete="current-password"
 								/>
@@ -152,10 +140,11 @@ export default class signup extends React.Component {
 							>
 								Sign Up
 							</Button>
+							{registering}
 						</div>
 						<Grid container justify="flex-end">
 							<Grid item>
-								<Link to="/Sign-In" variant="body2" className={classes.links}>
+								<Link to="/SignIn" variant="body2" className={classes.links}>
 									Already have an account? Sign in
 								</Link>
 							</Grid>
@@ -166,3 +155,15 @@ export default class signup extends React.Component {
 		);
 	}
 }
+
+function mapState(state) {
+    const { registering } = state.registration;
+    return { registering };
+}
+
+const actionCreators = {
+    register: userActions.register
+}
+
+const connectedRegisterPage = connect(mapState, actionCreators)(signup);
+export { connectedRegisterPage as signup };
