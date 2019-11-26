@@ -32,6 +32,7 @@ class AddAccount extends React.Component {
 		this.options = [ 'Efectivo', 'Débito', 'Ahorro', 'Crédito', 'Corriente', 'De valor' ];
 
 		this.state = {
+			user: '',
 			name: '',
 			type: this.options[0],
 			amount: '',
@@ -49,6 +50,7 @@ class AddAccount extends React.Component {
 
 	handleClose = () => {
 		this.setState({
+			user: '',
 			name: '',
 			type: this.options[0],
 			amount: '',
@@ -120,6 +122,7 @@ class AddAccount extends React.Component {
 						<Button
 							onClick={() => {
 								this.props.onSubmit({
+									user: JSON.parse(localStorage.getItem("user"))._id,
 									name: this.state.name,
 									type: this.state.type,
 									amount: this.state.amount

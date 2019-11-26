@@ -7,17 +7,22 @@ export default class Views extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			account_list: []
+			account_list: [],
+			logged_user: ''
 		};
 	}
 
 	componentDidMount() {
+		
+		let user = JSON.parse(localStorage.getItem('user'));
+
 		let options = {
 			headers: {
-				Accept: 'application/json'
+				Accept: 'application/json',
+				Authorization: `Bearer ${user.token}`
 			}
 		};
-		fetch(`${API.baseURL}/accounts`, options)
+		fetch(`${API.baseURL}/accounts/user_id/${user._id}`, options)
 			.then((res) => {
 				return res.json();
 			})
@@ -29,11 +34,13 @@ export default class Views extends React.Component {
 	}
 
 	handleSubmit(account) {
+		let user = JSON.parse(localStorage.getItem('user'));
 		let options = {
 			method: 'POST',
 			headers: {
 				'Content-type': 'application/json',
-				Accept: 'application/json'
+				Accept: 'application/json',
+				Authorization: `Bearer ${user.token}`
 			},
 
 			body: JSON.stringify(account)
@@ -56,11 +63,13 @@ export default class Views extends React.Component {
   
   handleDelete(account){
 
+	let user = JSON.parse(localStorage.getItem('user'));
     let options ={
         method : "DELETE",
         headers : {
             "Content-type" : "application/json",
-            Accept: "application/json"
+			Accept: "application/json",
+			Authorization: `Bearer ${user.token}`
         },
 
         body :  JSON.stringify({id:account._id})
