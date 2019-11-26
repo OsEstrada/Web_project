@@ -2,6 +2,8 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import alertActions from '../../actions/alert.actions';
+import { history } from '../../utils/userStorage/history';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
@@ -20,12 +22,17 @@ class signin extends React.Component {
 	constructor(props) {
 		super(props);
 
+		history.listen((location, action) => {
+			// clear alert on location change
+			this.props.clearAlerts();
+		});
+
 		// reset login status
 		this.props.logout();
 
 		this.state = {
 			email: '',
-			password: '',
+			password: ''
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -54,8 +61,8 @@ class signin extends React.Component {
 	};
 
 	render() {
-		const { loggingIn } = this.props;
-		const { email, password} = this.state;
+		const { loggingIn, alert } = this.props;
+		const { email, password } = this.state;
 
 		return (
 			<Grid container component="main" className={classes.body}>
@@ -69,54 +76,58 @@ class signin extends React.Component {
 						<Typography component="h1" variant="h5" className={classes.Typography}>
 							Sign in
 						</Typography>
-						<ValidatorForm className={classes.form} onSubmit={this.handleSubmit}>
-							<TextValidator
-								variant="outlined"
-								autoFocus
-								fullWidth
-								label="Correo Electrónico"
-								name="email"
-								value={email}
-								onChange={this.handleChange}
-								validators={[ 'required', 'isEmail' ]}
-								errorMessages={[ 'this field is required', 'email is not valid' ]}
-							/>
-							<TextValidator
-								variant="outlined"
-								required
-								fullWidth
-								name="password"
-								label="Contraseña"
-								type="password"
-								id="password"
-								value={password}
-								onChange={this.handleChange}
-								autoComplete="current-password"
-							/>
-							<FormControlLabel
-								control={<Checkbox value="remember" color="primary" />}
-								label="Remember me"
-							/>
-							<div className={classes.submit}>
-								<Button
-									type="submit"
+
+						<div className="col-sm-8 col-sm-offset-2">
+							{alert.message && <div className={`alert ${alert.type}`}>{alert.message}</div>}
+							<ValidatorForm className={classes.form} onSubmit={this.handleSubmit}>
+								<TextValidator
+									variant="outlined"
+									autoFocus
 									fullWidth
-									variant="contained"
-									color="primary"
-									className="submit_btn"
-								>
-									Sign In
-								</Button>
-								{loggingIn}
-							</div>
-							<Grid container justify="flex-end">
-								<Grid item>
-									<Link to="/SignUp" variant="body2" className={classes.links}>
-										Don't have an account? Sign Up
-									</Link>
+									label="Correo Electrónico"
+									name="email"
+									value={email}
+									onChange={this.handleChange}
+									validators={[ 'required', 'isEmail' ]}
+									errorMessages={[ 'this field is required', 'email is not valid' ]}
+								/>
+								<TextValidator
+									variant="outlined"
+									required
+									fullWidth
+									name="password"
+									label="Contraseña"
+									type="password"
+									id="password"
+									value={password}
+									onChange={this.handleChange}
+									autoComplete="current-password"
+								/>
+								<FormControlLabel
+									control={<Checkbox value="remember" color="primary" />}
+									label="Remember me"
+								/>
+								<div className={classes.submit}>
+									<Button
+										type="submit"
+										fullWidth
+										variant="contained"
+										color="primary"
+										className="submit_btn"
+									>
+										Sign In
+									</Button>
+									{loggingIn}
+								</div>
+								<Grid container justify="flex-end">
+									<Grid item>
+										<Link to="/SignUp" variant="body2" className={classes.links}>
+											Don't have an account? Sign Up
+										</Link>
+									</Grid>
 								</Grid>
-							</Grid>
-						</ValidatorForm>
+							</ValidatorForm>
+						</div>
 					</div>
 				</Grid>
 			</Grid>
@@ -125,13 +136,15 @@ class signin extends React.Component {
 }
 
 function mapState(state) {
-  const { loggingIn } = state.authentication;
-  return { loggingIn };
+	const { alert } = state;
+	const { loggingIn } = state.authentication;
+	return { loggingIn, alert };
 }
 
 const actionCreators = {
-  login: userActions.login,
-  logout: userActions.logout
+	clearAlerts: alertActions.clear,
+	login: userActions.login,
+	logout: userActions.logout
 };
 
 const connectedLoginPage = connect(mapState, actionCreators)(signin);

@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import ConnectedApp from './components/router';
+import App from './components/router';
 import store from './utils/userStorage/store';
 import * as serviceWorker from './serviceWorker';
 import { CometChat } from '@cometchat-pro/chat';
@@ -13,7 +13,7 @@ CometChat.init(config.appID)
 
 render(
     <Provider store={store}>
-        <ConnectedApp />
+        <App />
     </Provider>,
     document.getElementById('root')
 );

@@ -19,7 +19,6 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import config from '../../utils/config';
 import Input from '@material-ui/core/Input';
-import { inherits } from 'util';
 
 const drawerWidth = 240;
 const agentUID = config.agentUID;
