@@ -21,6 +21,7 @@ import {
 	IconButton,
 	Toolbar
 } from '@material-ui/core';
+import Transaction from './Transaction';
 
 const drawerWidth = 240;
 
@@ -240,7 +241,7 @@ class Principal extends React.Component {
 											<ViewAccounts />
 										</this.TabPanel>
 										<this.TabPanel value={this.state.value} index={1}>
-											Aqui van las transacciones
+											<Transaction/>
 										</this.TabPanel>
 										<this.TabPanel value={this.state.value} index={2}>
 											Aqui iran las categorias

@@ -12,9 +12,11 @@ export default class Views extends React.Component {
 	}
 
 	componentDidMount() {
+		let user = JSON.parse(localStorage.getItem('user'));
 		let options = {
 			headers: {
-				Accept: 'application/json'
+				Accept: 'application/json',
+				Authorization: `Bearer ${user.token}`
 			}
 		};
 		fetch(`${API.baseURL}/transaction`, options)
@@ -28,14 +30,16 @@ export default class Views extends React.Component {
 			.catch((err) => console.log('Ocurrio un error en la conexion'));
 	}
 
+	//NOTA HE MODIFICADO ESTO
 	handleSubmit(transaction) {
+		let user = JSON.parse(localStorage.getItem('user'));
 		let options = {
 			method: 'POST',
 			headers: {
 				'Content-type': 'application/json',
-				Accept: 'application/json'
+				Accept: 'application/json',
+				Authorization: `Bearer ${user.token}`
 			},
-
 			body: JSON.stringify(transaction)
 		};
 
@@ -93,7 +97,7 @@ export default class Views extends React.Component {
 						this.handleSubmit(transaction);
 					}}
 				/>
-				<TransactionTable/>
+			Aqui va transaction table, posiblemente con bootstrap
 
 			</div>
 		);
