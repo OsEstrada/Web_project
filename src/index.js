@@ -9,7 +9,14 @@ import * as serviceWorker from './serviceWorker';
 import { CometChat } from '@cometchat-pro/chat';
 import config from './utils/config';
 
-CometChat.init(config.appID)
+CometChat.init(config.appID).then(
+  () => {
+    console.log("Initialization completed successfully");
+  },
+  error => {
+    console.log("Initialization failed with error:", error);
+  }
+);
 
 render(
     <Provider store={store}>
