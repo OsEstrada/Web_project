@@ -144,8 +144,8 @@ class Chat extends React.Component {
 		return (
 			<Widget
 				handleNewUserMessage={this.handleNewUserMessage}
-				title="My E-commerce Live Chat"
-				subtitle="Ready to help you"
+				title="Golden Wallet Live Chat"
+				subtitle="Estamos listos para ayudarte, usualmente respondemos en unos minutos."
 			/>
 		);
 	}

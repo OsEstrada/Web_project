@@ -22,7 +22,25 @@ const styles = theme => ({
 	},
 	buttons: {
 		color: '#5a5560'
+	},
+	fab: {
+		width: 60,
+		height: 60,
+		[theme.breakpoints.only('xs')]: {
+			width: 40,
+			height: 40,
+			margin: 10
+		}
+	},
+	icon: {
+		width: 30,
+		height: 30,
+		[theme.breakpoints.only('xs')]: {
+			width: 20,
+            height: 20,
+		}
 	}
+	
 })
 
 class AddAccount extends React.Component {
@@ -68,14 +86,14 @@ class AddAccount extends React.Component {
 	render() {
 		return (
 			<div>
-				<Box display="flex" paddingRight="4%" paddingTop="1%" justifyContent="flex-end">
+				<Box display="flex" paddingRight="2%" paddingTop="1%" justifyContent="flex-end">
 					<Fab
 						color="inherit"
 						aria-label="add"
-						style={{ width: '80', height: '80' }}
+						className={this.props.classes.fab}
 						onClick={this.handleClickOpen}
 					>
-						<AddIcon style={{ width: '30', height: '30' }} />
+						<AddIcon className={this.props.classes.icon}/>
 					</Fab>
 				</Box>
 				<Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
