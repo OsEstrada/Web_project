@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import ViewAcounts from './viewAcounts';
+import ViewAccounts from './viewAccounts';
 import MenuIcon from '@material-ui/icons/Menu';
 import Chat from './Chat';
 import Image from '../../utils/images/piggy.jpg';
@@ -237,7 +237,7 @@ class Principal extends React.Component {
 								<Box flexGrow={1} height="100%">
 									<div className={classes.bodycontainer}>
 										<this.TabPanel value={this.state.value} index={0}>
-											<ViewAcounts />
+											<ViewAccounts />
 										</this.TabPanel>
 										<this.TabPanel value={this.state.value} index={1}>
 											Aqui van las transacciones

@@ -106,7 +106,7 @@ export default class Views extends React.Component {
 					}}
 				/>
 
-        <div style={{display:'flex', flexFlow: 'row wrap', justifyContent: 'center'}}>
+        <div style={{display:'flex', flexFlow: 'row wrap', justifyContent: 'center', overflowX: 'hidden', maxHeight: '75vh'}}>
           {this.state.account_list.map((element) => {
             return <CardAccount key={element._id} account={element} onDelete= {()=>{
                     this.handleDelete(element);
