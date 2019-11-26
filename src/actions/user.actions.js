@@ -11,15 +11,22 @@ const userActions = {
     delete: _delete
 };
 
-function login(username, password) {
+function login(email, password) {
     return dispatch => {
-        dispatch(request({ username }));
+        dispatch(request({ email }));
 
-        userService.login(username, password)
+        userService.login(email, password)
             .then(
                 user => { 
                     dispatch(success(user));
-                    history.push('/Home');
+
+                    if(user.email === 'soporte_tecnico@goldenwallet.com'){
+                        history.push('/Home/Support');
+                    }else if(user.email === 'admin@goldenwallet.com'){
+                        history.push('/Home/Admin');
+                    }else {
+                        history.push('/Home');
+                    }
                 },
                 error => {
                     dispatch(failure(error.toString()));

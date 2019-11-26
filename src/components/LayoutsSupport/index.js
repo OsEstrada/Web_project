@@ -119,7 +119,7 @@ class ResponsiveDrawer extends React.Component {
 						</Typography>
 
 						<Grid container justify="flex-end" alignItems="center" className={classes.barcontainer}>
-							<Avatar alt="user" src="user-512.jpg" className={classes.avatar} />
+							<Avatar alt="user" src="../../../public/user-512.jpg" className={classes.avatar} />
 							<Button>
 								<ExitToAppIcon className={classes.icon} />
 							</Button>
@@ -163,7 +163,7 @@ class ResponsiveDrawer extends React.Component {
 								<ChatBox {...this.props} />
 							</Box>
 						</Box>
-						<Box display="flex" alignItems="center" p={1} m={2} bgcolor="white" borderRadius="20px">
+						<Box display="flex" alignItems="center" p={1} ml={2} mr={2} bgcolor="white" borderRadius="20px">
 							<Box flexGrow={1}>
 								<Input
 									placeholder="Escribe tu mensaje"
