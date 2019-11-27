@@ -2,12 +2,14 @@ import React from 'react';
 import API from '../../utils/apiUrlBase';
 import AddTransaction from './AddTransaction';
 import TransactionTable from './TransactionTable';
+import TransactionRow from './TransactionRow';
 
 export default class Views extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			transaction_list: []
+			transaction_list: [],
+			account_list:[],
 		};
 	}
 
@@ -28,6 +30,16 @@ export default class Views extends React.Component {
 				this.setState({transaction_list: this.state.transaction_list.concat(data)});
 			})
 			.catch((err) => console.log('Ocurrio un error en la conexion'));
+
+		fetch(`${API.baseURL}/accounts/user_id/${user._id}`, options)
+			.then((res) => {
+				return res.json();
+			})
+			.then((data) => {
+				console.log(data);
+				this.setState({account_list: this.state.account_list.concat(data)});
+			})
+			.catch((err) => console.log('Ocurrio un error en la conexion'));
 	}
 
 	//NOTA HE MODIFICADO ESTO
@@ -43,7 +55,7 @@ export default class Views extends React.Component {
 			body: JSON.stringify(transaction)
 		};
 
-		fetch(`${API.baseURL}/transactions/create`, options)
+		fetch(`${API.baseURL}/transaction/create`, options)
 			.then((res) => {
 				return res.json();
 			})
@@ -52,7 +64,7 @@ export default class Views extends React.Component {
 				let list = this.state.transaction_list.slice();
 
 				this.setState({
-					transaction_list: list.concat([ data.account ])
+					transaction_list: list.concat([ data.transaction ])
 				});
 			})
 			.catch((err) => console.log('Ocurrio un error en la conexion'));
@@ -90,15 +102,38 @@ export default class Views extends React.Component {
 }
 
 	render() {
+		let rows = this.state.transaction_list.map((element,index)=>{
+            return <tr className="table-active" key={index}>
+                <td>{element.date}</td>
+                <td>{element.account}</td>
+                <td>{element.type}</td>
+                <td>{element.amount}</td>
+            </tr>
+        });
 		return (
 			<div>
 				<AddTransaction
 					onSubmit={(transaction) => {
 						this.handleSubmit(transaction);
 					}}
+					account_list = {this.state.account_list}
 				/>
 			Aqui va transaction table, posiblemente con bootstrap
-
+	
+                    <table className="table table-hover">
+                        <thead>
+                            <tr className="table-primary">
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Cuenta</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Monto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rows}
+                        </tbody>
+                    </table>
+				
 			</div>
 		);
 	}
