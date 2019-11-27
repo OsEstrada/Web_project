@@ -1,8 +1,8 @@
 import React from 'react';
 import API from '../../utils/apiUrlBase';
 import AddTransaction from './AddTransaction';
-import TransactionTable from './TransactionTable';
 import TransactionRow from './TransactionRow';
+import './bootstrap.min.css';
 
 export default class Views extends React.Component {
 	constructor(props) {
@@ -103,12 +103,8 @@ export default class Views extends React.Component {
 
 	render() {
 		let rows = this.state.transaction_list.map((element,index)=>{
-            return <tr className="table-active" key={index}>
-                <td>{element.date}</td>
-                <td>{element.account}</td>
-                <td>{element.type}</td>
-                <td>{element.amount}</td>
-            </tr>
+            return <TransactionRow key={index} 
+			transaction={element}/>
         });
 		return (
 			<div>
@@ -117,12 +113,11 @@ export default class Views extends React.Component {
 						this.handleSubmit(transaction);
 					}}
 					account_list = {this.state.account_list}
-				/>
-			Aqui va transaction table, posiblemente con bootstrap
-	
+				/>	
+				<div style={{padding:'3%'}}>
                     <table className="table table-hover">
                         <thead>
-                            <tr className="table-primary">
+                            <tr className='table-secondary'>
                                 <th scope="col">Fecha</th>
                                 <th scope="col">Cuenta</th>
                                 <th scope="col">Tipo</th>
@@ -133,7 +128,7 @@ export default class Views extends React.Component {
                             {rows}
                         </tbody>
                     </table>
-				
+				</div>
 			</div>
 		);
 	}
