@@ -13,7 +13,7 @@ export default class Views extends React.Component {
 	}
 
 	componentDidMount() {
-		
+
 		let user = JSON.parse(localStorage.getItem('user'));
 
 		let options = {
