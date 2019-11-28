@@ -146,13 +146,12 @@ class AddTransaction extends React.Component {
 						</Button>
 						<Button
 							onClick={() => {
-								console.log(this.state.date)
 								this.props.onSubmit({
 									date: this.state.date,
 									account: this.state.account,
 									type: this.state.type,
 									amount: this.state.amount,
-									category: this.state.category
+									user: JSON.parse(localStorage.getItem("user"))._id
 								});
 								this.handleClose();
 							}}

@@ -125,6 +125,12 @@ class Principal extends React.Component {
 		};
 	}
 
+	reload = () => {
+		localStorage.clear();
+		window.location.replace('/signin')
+		
+	}
+
 	handleChange = (event, newValue) => {
 		this.setState({ value: newValue });
 	};
@@ -170,11 +176,13 @@ class Principal extends React.Component {
 							<img src="GW.png" alt="logo" className={classes.logo} />
 							<Grid container justify="flex-end" alignItems="flex-end">
 								<Avatar alt="user" src="user-512.jpg" className={classes.avatar} />
-								<Link to="./SignIn">
-									<Button>
-										<ExitToAppIcon className={classes.icon} />
+								
+								
+									<Button onClick={this.reload}>
+										<ExitToAppIcon className={classes.icon}/>
 									</Button>
-								</Link>
+
+
 							</Grid>
 						</Toolbar>
 					</AppBar>

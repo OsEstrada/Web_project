@@ -2,7 +2,7 @@ import React from 'react';
 import API from '../../utils/apiUrlBase';
 import AddTransaction from './AddTransaction';
 import TransactionRow from './TransactionRow';
-import './bootstrap.min.css';
+
 
 export default class Views extends React.Component {
 	constructor(props) {
@@ -21,13 +21,13 @@ export default class Views extends React.Component {
 				Authorization: `Bearer ${user.token}`
 			}
 		};
-		fetch(`${API.baseURL}/transaction`, options)
+		fetch(`${API.baseURL}/transaction/getbyId/${user._id}`, options)
 			.then((res) => {
 				return res.json();
 			})
 			.then((data) => {
 				console.log(data);
-				this.setState({transaction_list: this.state.transaction_list.concat(data)});
+				this.setState({transaction_list: data});
 			})
 			.catch((err) => console.log('Ocurrio un error en la conexion'));
 
@@ -42,6 +42,36 @@ export default class Views extends React.Component {
 			.catch((err) => console.log('Ocurrio un error en la conexion'));
 	}
 
+	getList(){
+		let user = JSON.parse(localStorage.getItem('user'));
+		let options = {
+			headers: {
+				Accept: 'application/json',
+				Authorization: `Bearer ${user.token}`
+			}
+		};
+		fetch(`${API.baseURL}/transaction/getbyId/${user._id}`, options)
+			.then((res) => {
+				return res.json();
+			})
+			.then((data) => {
+				console.log(data);
+				this.setState({transaction_list: data});
+			})
+			.catch((err) => console.log('Ocurrio un error en la conexion'));
+
+		fetch(`${API.baseURL}/accounts/user_id/${user._id}`, options)
+			.then((res) => {
+				return res.json();
+			})
+			.then((data) => {
+				console.log(data);
+				this.setState({account_list: data});
+			})
+			.catch((err) => console.log('Ocurrio un error en la conexion'));
+	}
+	
+	
 	//NOTA HE MODIFICADO ESTO
 	handleSubmit(transaction) {
 		let user = JSON.parse(localStorage.getItem('user'));
@@ -60,12 +90,7 @@ export default class Views extends React.Component {
 				return res.json();
 			})
 			.then((data) => {
-				console.log(data);
-				let list = this.state.transaction_list.slice();
-
-				this.setState({
-					transaction_list: list.concat([ data.transaction ])
-				});
+				this.getList()
 			})
 			.catch((err) => console.log('Ocurrio un error en la conexion'));
   }
