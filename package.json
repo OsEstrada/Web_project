@@ -47,5 +47,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://clientegoldenwallet.herokuapp.com/"
+  "proxy": "http://localhost:4000"
 }
