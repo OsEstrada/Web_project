@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserLock } from '@fortawesome/free-solid-svg-icons';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import Image from '../../utils/images/account.jpg';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import classes from './styles.module.css';
 import { Link } from 'react-router-dom';
@@ -67,14 +68,14 @@ class signin extends React.Component {
 		return (
 			<Grid container component="main" className={classes.body}>
 				<CssBaseline />
-				<Grid item xs={false} sm={4} md={7} className={classes.image} />
+				<Grid item xs={false} sm={4} md={7} style={{backgroundImage: `url(${Image})`}} />
 				<Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
 					<div className={classes.paper_signin}>
 						<Avatar>
 							<FontAwesomeIcon icon={faUserLock} />
 						</Avatar>
 						<Typography component="h1" variant="h5" className={classes.Typography}>
-							Sign in
+							Iniciar Sesión
 						</Typography>
 
 						<div className="col-sm-8 col-sm-offset-2">
@@ -87,6 +88,7 @@ class signin extends React.Component {
 									label="Correo Electrónico"
 									name="email"
 									value={email}
+									style={{marginTop: '10px', marginBottom: '10px' }}
 									onChange={this.handleChange}
 									validators={[ 'required', 'isEmail' ]}
 									errorMessages={[ 'this field is required', 'email is not valid' ]}
@@ -101,7 +103,8 @@ class signin extends React.Component {
 									id="password"
 									value={password}
 									onChange={this.handleChange}
-									autoComplete="current-password"
+									validators={[ 'required' ]}
+									errorMessages={[ 'this field is required']}
 								/>
 								<FormControlLabel
 									control={<Checkbox value="remember" color="primary" />}
@@ -115,14 +118,14 @@ class signin extends React.Component {
 										color="primary"
 										className="submit_btn"
 									>
-										Sign In
+										Iniciar Sesión
 									</Button>
 									{loggingIn}
 								</div>
 								<Grid container justify="flex-end">
 									<Grid item>
 										<Link to="/SignUp" variant="body2" className={classes.links}>
-											Don't have an account? Sign Up
+											¿No tienes una cuenta? Registrate
 										</Link>
 									</Grid>
 								</Grid>

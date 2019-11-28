@@ -25,13 +25,21 @@ code {
 
 .balon1 {
   float: right;
-  background: #35cce6;
+  background: #baffeb;
   border-radius: 10px;
 }
 
 .balon2 {
   float: left;
-  background: #f4f7f9;
+  background: #d7d3f5;
   border-radius: 10px;
 }
 
+[class*="colu-"] {
+  width: 100%;
+}
+
+@media only screen and (min-width: 1124px) {
+  /* For desktop: */
+  .colu-1 {width: 80%;}
+}

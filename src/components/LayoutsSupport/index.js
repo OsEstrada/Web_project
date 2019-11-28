@@ -9,7 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import Toolbar from '@material-ui/core/Toolbar';
 import Box from '@material-ui/core/Box';
-import Avatar from '@material-ui/core/Avatar';
+import { Route, Redirect, Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Button from '@material-ui/core/Button';
@@ -27,7 +27,7 @@ const styles = (theme) => ({
 	root: {
 		display: 'flex',
 		height: '100vh',
-		backgroundColor: '#D0EFED'
+		backgroundColor: 'white'
 	},
 	drawer: {
 		[theme.breakpoints.up('sm')]: {
@@ -41,7 +41,7 @@ const styles = (theme) => ({
 			marginLeft: drawerWidth
 		},
 		backgroundColor: '#5DEDE4',
-		color: '#26948D',
+		color: '#254242'
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
@@ -50,10 +50,10 @@ const styles = (theme) => ({
 		}
 	},
 	customerstittle: {
-		color: '#26948D',
+		color: '#254242',
 		fontSize: '2em',
 		marginLeft: theme.spacing(2),
-		marginTop: theme.spacing(2),
+		marginTop: theme.spacing(2)
 	},
 	toolbar: theme.mixins.toolbar,
 	drawerPaper: {
@@ -62,15 +62,12 @@ const styles = (theme) => ({
 	content: {
 		display: 'flex',
 		flexGrow: 1,
-		justifyContent: 'center'
-	},
-	avatar: {
-		width: 40,
-		height: 40
+		justifyContent: 'center',
+		backgroundColor: '#254242'
 	},
 	icon: {
 		fontSize: '2.3em',
-		color: 'white'
+		color: '#254242'
 	},
 	fab: {
 		backgroundColor: '#5DEDE4'
@@ -114,15 +111,14 @@ class ResponsiveDrawer extends React.Component {
 						>
 							<MenuIcon />
 						</IconButton>
-						<Typography variant="h6">
-							Messages
-						</Typography>
+						<Typography variant="h6">Messages</Typography>
 
 						<Grid container justify="flex-end" alignItems="center" className={classes.barcontainer}>
-							<Avatar alt="user" src="../../../public/user-512.jpg" className={classes.avatar} />
-							<Button>
-								<ExitToAppIcon className={classes.icon} />
-							</Button>
+							<Link to={{ pathname: '/SignIn'}}>
+								<Button>
+									<ExitToAppIcon className={classes.icon} />
+								</Button>
+							</Link>
 						</Grid>
 					</Toolbar>
 				</AppBar>
@@ -157,7 +153,7 @@ class ResponsiveDrawer extends React.Component {
 					</Hidden>
 				</nav>
 				<main className={classes.content}>
-					<div style={{ width: '100%' }} height={100}>
+					<div className="colu-1" height={100}>
 						<Box display="flex" alignItems="center" p={1} m={1} height="80%">
 							<Box bgcolor="white" flexGrow={1} height="100%" borderRadius="20px">
 								<ChatBox {...this.props} />
@@ -179,13 +175,13 @@ class ResponsiveDrawer extends React.Component {
 							<Box p={1}>
 								<Fab
 									className={classes.fab}
-									style={{ width: '10', height: '15'}}
+									style={{ width: '10', height: '15' }}
 									onClick={() => {
 										this.props.onSubmit(this.state.message);
 										this.handleClose();
 									}}
 								>
-									<SendRoundedIcon className={classes.icon}/>
+									<SendRoundedIcon className={classes.icon} />
 								</Fab>
 							</Box>
 						</Box>
@@ -240,14 +236,14 @@ class CustomerList extends React.Component {
 		} else {
 			return (
 				<div>
-					<h1 className={classes.customerstittle}>
-						Lista de clientes
-					</h1>
+					<h1 className={classes.customerstittle}>Lista de clientes</h1>
 					<ul className="list-group list-group-flush w-100">
 						{customers.map((customer) => (
 							<li
 								key={customer.uid}
-								className={`list-group-item ${customer.uid === selectedCustomer ? 'active' : ''} font-weight-bold`}
+								className={`list-group-item ${customer.uid === selectedCustomer
+									? 'active'
+									: ''} font-weight-bold`}
 								onClick={() => this.props.selectCustomer(customer.uid)}
 							>
 								{customer.name}

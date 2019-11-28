@@ -72,7 +72,7 @@ class signup extends React.Component {
 						<LockOutlinedIcon />
 					</Avatar>
 					<Typography component="h1" variant="h5" className={classes.typography}>
-						Sign up
+						Registrate
 					</Typography>
 					<hr />
 					<ValidatorForm className={classes.form} onSubmit={this.reset}>
@@ -138,14 +138,14 @@ class signup extends React.Component {
 								className="submit_btn"
 								onClick={this.handleSubmit}
 							>
-								Sign Up
+								Registrarse
 							</Button>
 							{registering}
 						</div>
 						<Grid container justify="flex-end">
 							<Grid item>
 								<Link to="/SignIn" variant="body2" className={classes.links}>
-									Already have an account? Sign in
+									¿Ya tienes una cuenta? Inicia sesión
 								</Link>
 							</Grid>
 						</Grid>
